@@ -4,7 +4,5 @@ import view.OutputView
 
 fun main(){
     val controller = Controller()
-
     controller.run(inputView = InputView(), outputView = OutputView())
-
 }

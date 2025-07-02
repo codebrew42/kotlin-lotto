@@ -1,20 +1,19 @@
 package view
 
 class InputView {
-    // TODO: decide whether we want to re-prompt always or never
-    fun readLineOrRetry(prompt: String): String {
+    private fun readLineOrRetry(prompt: String): String {
         while (true) {
             print(prompt)
             val input = readLine()
             if (input != null) {
                 return input
             } else {
-                println("Enter the input again!")
+                println(RETRY_INPUT_MESSAGE)
             }
         }
     }
 
-    fun parsePurchaseAmount(input: String): Int? {
+    private fun parsePurchaseAmount(input: String): Int? {
         return input.toIntOrNull()
     }
 
@@ -25,37 +24,37 @@ class InputView {
             if (amount != null) {
                 return amount
             } else {
-                println("The input is invalid!")
+                println(INVALID_INPUT_MESSAGE)
             }
         }
     }
 
-    fun convertWinningNumbers(input: String): List<Int> {
+    private fun convertWinningNumbers(input: String): List<Int> {
         return try {
             input.split(",")
                 .map { it.trim().toInt() }
         } catch (e: NumberFormatException) {
-            throw IllegalArgumentException("[ERROR] winning numbers must be valid digits.")
+            throw IllegalArgumentException(ERROR_INVALID_DIGITS)
         }
     }
 
-    fun isValidRange(numbers: List<Int>): Boolean{
+    fun isValidRange(numbers: List<Int>): Boolean {
         return numbers.all { it in 1..45 }
     }
 
 
-    fun hasNoDuplicates(numbers: List<Int>): Boolean{
+    fun hasNoDuplicates(numbers: List<Int>): Boolean {
         return numbers.toSet().size == numbers.size
     }
 
-    fun hasProperSize(numbers: List<Int>): Boolean{
+    fun hasProperSize(numbers: List<Int>): Boolean {
         return numbers.size == 6
     }
 
     fun validateWinningNumbers(winningNumbers: List<Int>) {
-        require(isValidRange(winningNumbers)) { "[ERROR] Numbers must be between 1 and 45. "}
-        require(hasNoDuplicates(winningNumbers)) { "[ERROR] Numbers must be unique." }
-        require(hasProperSize(winningNumbers)) { "[ERROR] There must be 6 numbers." }
+        require(isValidRange(winningNumbers)) { ERROR_BONUS_RANGE }
+        require(hasNoDuplicates(winningNumbers)) { ERROR_DUPLICATE }
+        require(hasProperSize(winningNumbers)) { ERROR_NUMBERSET_SIZE }
     }
 
     fun getWinningNumbers(): List<Int> {
@@ -72,8 +71,8 @@ class InputView {
     }
 
     fun validateBonusNumber(bonusNumber: Int, winningNumbers: List<Int>) {
-        require ( bonusNumber in 1..45) { "[ERROR] Number must be between 1 and 45. " }
-        require (!winningNumbers.contains(bonusNumber)) { "[ERROR] Bonus number can't be contained in winning numbers. " }
+        require(bonusNumber in 1..45) { ERROR_BONUS_RANGE }
+        require(!winningNumbers.contains(bonusNumber)) { ERROR_DUPLICATE }
     }
 
     fun getBonusNumber(winningNumbers: List<Int>): Int {
@@ -88,10 +87,16 @@ class InputView {
             }
         }
     }
-    companion object {
-        const val GET_PURCHASE_AMOUNT = "Please enter the purchase amount."
-        const val GET_WINNING_NUMBERS = "Please enter last week’s winning numbers."
-        const val GET_BONUS_NUMBERS = "Please enter last week’s bonus number."
 
+    companion object {
+        private const val GET_PURCHASE_AMOUNT = "Please enter the purchase amount.\n"
+        private const val GET_WINNING_NUMBERS = "Please enter last week's winning numbers.\n"
+        private const val GET_BONUS_NUMBERS = "Please enter last week's bonus number.\n"
+        private const val INVALID_INPUT_MESSAGE = "The input is invalid!"
+        private const val RETRY_INPUT_MESSAGE = "Enter the input again!"
+        private const val ERROR_INVALID_DIGITS = "[ERROR] Winning numbers must be valid digits."
+        private const val ERROR_BONUS_RANGE = "[ERROR] Number must be between 1 and 45."
+        private const val ERROR_DUPLICATE = "[ERROR] Numbers can't be duplicates."
+        private const val ERROR_NUMBERSET_SIZE = "[ERROR] There must be 6 numbers."
     }
 }

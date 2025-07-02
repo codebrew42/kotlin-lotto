@@ -15,9 +15,9 @@
 - [x] get input from user: bonus number (1 digit)
   - [x] different from the winning numbers
   - [x] in the range of [1, 45]
-- [ ] find and display matches
-- [ ] calculate winning statistics
-- [ ] display winning statistics
+- [x] find and display matches
+- [x] calculate winning statistics
+- [x] display winning statistics
 
 ## requirements
 - use `shuffled()` to generate random nbrs

@@ -27,6 +27,9 @@ class OutputView {
         println("6 Matches (2,000,000,000 KRW) - ${results[0]}  tickets")
     }
 
+    fun displayWinningStatistic(winningStatistic: Float) {
+        println("Total return rate is $winningStatistic (A rate below 1 means a loss)\n")
+    }
     companion object {
     }
 }

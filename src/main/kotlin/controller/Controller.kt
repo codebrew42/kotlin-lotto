@@ -16,9 +16,12 @@ class Controller {
         val winningNumbers = inputView.getWinningNumbers()
         println(winningNumbers)
         val bonusNumber = inputView.getBonusNumber(winningNumbers)
-        println("bonus: $bonusNumber")
         val matchResult = calculateMatchResults(lotto, winningNumbers, bonusNumber)
         outputView.displayMatchResults(matchResult)
+        val winningStatistic = calculateWinningStatistic(purchaseAmount, matchResult)
+        //println("winning Stati-: $winningStatistic")
+        outputView.displayWinningStatistic(winningStatistic)
+
     }
 
     fun calculateMatchResults(lotto: Lotto, winningNumbers: List<Int>, bonusNumber: Int): List<Int> {
@@ -34,6 +37,22 @@ class Controller {
             }
         }
         return matches
+    }
+
+    fun getWinningAmount(matchResult: List<Int>): Int {
+        var totalAmount = 0
+
+        for ((index, rank) in Rank.entries.withIndex()) {
+            val count = matchResult.getOrElse(index) { 0 }
+            totalAmount += count * rank.winningMoney
+        }
+        return totalAmount
+    }
+
+
+    fun calculateWinningStatistic(purchaseAmount: Int, matchResult: List<Int>): Float {
+        val winningAmount = getWinningAmount(matchResult)
+        return (winningAmount/purchaseAmount).toFloat()
     }
 
 }

@@ -1,6 +1,13 @@
-# kotlin-model
+# kotlin-lotto
+
+This is the submission for "step 1 - lotto" for the "Hero Tech Course 2025" by [Jin](https://github.com/codebrew42) and [Deniz](https://github.com/deniz-oezdemir).
+
+This project is a console-based Kotlin application that simulates a lotto game. After the user inputs a purchase amount, winning numbers, and a bonus number, the program generates tickets, validates inputs, calculates results, and displays winning statistics.
 
 ## features
+
+The features were implemented in the following order:
+
 - [x] get input from user: purchase amount from user
   - [x] units of 1000
   - [x] greater than or equal to 1000
@@ -19,11 +26,7 @@
 - [x] calculate winning statistics
 - [x] display winning statistics
 
-## requirements
-- use `shuffled()` to generate random nbrs
-- use `sorted()`
-- use `contains()`
-
-
-## checklist
-- prompting : purchase amount
+## learnings
+- use [model-view-controller pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
+- apply test driven development as (1) writing tests, (2) write code that passes tests, (3) refactor code,
+and repeat (1) to (3) until program fulfills all requirements

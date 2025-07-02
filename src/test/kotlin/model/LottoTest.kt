@@ -1,11 +1,10 @@
 package model
 
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import kotlin.test.assertTrue
-
 
 class LottoTest {
     @Test
@@ -61,8 +60,6 @@ class LottoTest {
             assertTrue(number >= 1 && number <= 45, "Number $number is not in valid range 1-45")
         }
     }
-
-
 
 
 }

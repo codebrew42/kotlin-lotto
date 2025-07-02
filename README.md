@@ -5,10 +5,10 @@
   - [x] units of 1000
   - [x] greater than or equal to 1000
 - [x] display purchase amount `N`
-- [ ] display N-Sets of randomly generated numbers
-  - [ ] size of ticket is 6
-  - [ ] each radom number is in range [1, 45]
-  - [ ] no duplicates
+- [x] display N-Sets of randomly generated numbers
+  - [x] size of ticket is 6
+  - [x] each radom number is in range [1, 45]
+  - [x] no duplicates
 - [ ] get input from user: last week's winning numbers (6 digits)
   - [ ] no duplicates
   - [ ] in the range of [1, 45]
@@ -21,3 +21,7 @@
 - use `shuffled()` to generate random nbrs
 - use `sorted()`
 - use `contains()`
+
+
+## checklist
+- prompting : purchase amount

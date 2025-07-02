@@ -11,6 +11,12 @@ class OutputView {
         println("You have purchased ${lotto.numberOfTickets} tickets.")
     }
 
+    fun displayTickets(lotto: Lotto) {
+        for (i in 0 until lotto.numberOfTickets) {
+            println(lotto.tickets[i])
+        }
+    }
+
     companion object {
     }
 }

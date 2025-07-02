@@ -1,9 +1,14 @@
 package lotto
 
 class Lotto(val purchaseAmount: Int) {
+    val numberOfTickets: Int
+
     init {
         require(purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) { ERROR_INVALID_UNIT }
+        numberOfTickets = purchaseAmount / PURCHASE_AMOUNT_UNIT
     }
+
+
 
     companion object {
         const val PURCHASE_AMOUNT_UNIT = 1000

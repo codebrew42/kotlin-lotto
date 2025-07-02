@@ -7,6 +7,10 @@ class OutputView {
         println("${lotto.purchaseAmount}")
     }
 
+    fun displayNumberOfLottoTickets(lotto: Lotto) {
+        println("You have purchased ${lotto.numberOfTickets} tickets.")
+    }
+
     companion object {
     }
 }

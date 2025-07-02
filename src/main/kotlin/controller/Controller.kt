@@ -9,5 +9,6 @@ class Controller {
         val purchaseAmount = inputView.getPurchaseAmount()
         val lotto = Lotto(purchaseAmount)
         outputView.displayPurchaseAmount(lotto)
+        outputView.displayNumberOfLottoTickets(lotto)
     }
 }

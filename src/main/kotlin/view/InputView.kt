@@ -1,5 +1,7 @@
 package view
 
+import model.Lotto
+
 class InputView {
     private fun readLineOrRetry(prompt: String): String {
         while (true) {
@@ -42,13 +44,12 @@ class InputView {
         return numbers.all { it in 1..45 }
     }
 
-
     fun hasNoDuplicates(numbers: List<Int>): Boolean {
         return numbers.toSet().size == numbers.size
     }
 
     fun hasProperSize(numbers: List<Int>): Boolean {
-        return numbers.size == 6
+        return numbers.size == Lotto.TICKET_LENGTH
     }
 
     fun validateWinningNumbers(winningNumbers: List<Int>) {
@@ -71,7 +72,7 @@ class InputView {
     }
 
     fun validateBonusNumber(bonusNumber: Int, winningNumbers: List<Int>) {
-        require(bonusNumber in 1..45) { ERROR_BONUS_RANGE }
+        require(bonusNumber in Lotto.TICKET_NUMBER_MINIMUM..Lotto.TICKET_NUMBER_MAXIMUM) { ERROR_BONUS_RANGE }
         require(!winningNumbers.contains(bonusNumber)) { ERROR_DUPLICATE }
     }
 
@@ -95,8 +96,9 @@ class InputView {
         private const val INVALID_INPUT_MESSAGE = "The input is invalid!"
         private const val RETRY_INPUT_MESSAGE = "Enter the input again!"
         private const val ERROR_INVALID_DIGITS = "[ERROR] Winning numbers must be valid digits."
-        private const val ERROR_BONUS_RANGE = "[ERROR] Number must be between 1 and 45."
+        private const val ERROR_BONUS_RANGE =
+            "[ERROR] Number must be between ${Lotto.TICKET_NUMBER_MINIMUM} and ${Lotto.TICKET_NUMBER_MAXIMUM}."
         private const val ERROR_DUPLICATE = "[ERROR] Numbers can't be duplicates."
-        private const val ERROR_NUMBERSET_SIZE = "[ERROR] There must be 6 numbers."
+        private const val ERROR_NUMBERSET_SIZE = "[ERROR] There must be ${Lotto.TICKET_LENGTH} numbers."
     }
 }

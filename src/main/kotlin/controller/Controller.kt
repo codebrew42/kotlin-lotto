@@ -1,6 +1,6 @@
 package controller
 
-import lotto.Lotto
+import model.Lotto
 import view.InputView
 import view.OutputView
 
@@ -12,5 +12,7 @@ class Controller {
         outputView.displayNumberOfLottoTickets(lotto)
         lotto.generateTickets()
         outputView.displayTickets(lotto)
+        val winningNumbers = inputView.getWinningNumbers()
+        println(winningNumbers)
     }
 }

@@ -1,4 +1,4 @@
-# kotlin-lotto
+# kotlin-model
 
 ## features
 - [x] get input from user: purchase amount from user
@@ -9,9 +9,9 @@
   - [x] size of ticket is 6
   - [x] each radom number is in range [1, 45]
   - [x] no duplicates
-- [ ] get input from user: last week's winning numbers (6 digits)
-  - [ ] no duplicates
-  - [ ] in the range of [1, 45]
+- [x] get input from user: last week's winning numbers (6 digits)
+  - [x] no duplicates
+  - [x] in the range of [1, 45]
 - [ ] get input from user: bonus number (1 digit)
   - [ ] different from the winning numbers
 - [ ] calculate winning statistics

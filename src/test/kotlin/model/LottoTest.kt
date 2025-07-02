@@ -1,4 +1,4 @@
-package lotto
+package model
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -61,5 +61,9 @@ class LottoTest {
             assertTrue(number >= 1 && number <= 45, "Number $number is not in valid range 1-45")
         }
     }
+
+
+
+
 
 }

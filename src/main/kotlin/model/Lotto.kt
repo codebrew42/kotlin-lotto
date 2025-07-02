@@ -1,4 +1,4 @@
-package lotto
+package model
 
 class Lotto(val purchaseAmount: Int) {
     val numberOfTickets: Int

@@ -20,7 +20,7 @@ class InputView {
 
     fun getPurchaseAmount(): Int {
         while (true) {
-            val input = readLineOrRetry("Enter the purchase amount: ")
+            val input = readLineOrRetry(GET_PURCHASE_AMOUNT)
             val amount = parsePurchaseAmount(input)
             if (amount != null) {
                 return amount
@@ -28,5 +28,9 @@ class InputView {
                 println("The input is invalid!")
             }
         }
+    }
+
+    companion object {
+        const val GET_PURCHASE_AMOUNT = "Please enter the purchase amount."
     }
 }

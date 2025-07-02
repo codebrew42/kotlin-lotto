@@ -1,6 +1,6 @@
 package lotto
 
-class Lotto(purchaseAmount: Int) {
+class Lotto(val purchaseAmount: Int) {
     init {
         require(purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) { ERROR_INVALID_UNIT }
     }

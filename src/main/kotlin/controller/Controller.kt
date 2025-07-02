@@ -14,14 +14,13 @@ class Controller {
         lotto.generateTickets()
         outputView.displayTickets(lotto)
         val winningNumbers = inputView.getWinningNumbers()
-        println(winningNumbers)
+        outputView.displayWinningNumbers(winningNumbers)
         val bonusNumber = inputView.getBonusNumber(winningNumbers)
+        outputView.displayBonusNumber(bonusNumber)
         val matchResult = calculateMatchResults(lotto, winningNumbers, bonusNumber)
         outputView.displayMatchResults(matchResult)
         val winningStatistic = calculateWinningStatistic(purchaseAmount, matchResult)
-        //println("winning Stati-: $winningStatistic")
         outputView.displayWinningStatistic(winningStatistic)
-
     }
 
     fun calculateMatchResults(lotto: Lotto, winningNumbers: List<Int>, bonusNumber: Int): List<Int> {

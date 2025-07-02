@@ -22,8 +22,5 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
                 else -> MISS
             }
         }
-
-
     }
-
 }

@@ -15,6 +15,20 @@ class OutputView {
         for (i in 0 until lotto.numberOfTickets) {
             println(lotto.tickets[i])
         }
+        println()
+    }
+
+    fun displayWinningNumbers(winningNumbers: List<Int>) {
+        for (winningNumber in winningNumbers) {
+            if (winningNumbers.last() != winningNumber)
+                print("$winningNumber, ")
+            else
+                println("$winningNumber")
+        }
+    }
+
+    fun displayBonusNumber(bonusNumber: Int) {
+        println("$bonusNumber\n")
     }
 
     fun displayMatchResults(results: List<Int>) {

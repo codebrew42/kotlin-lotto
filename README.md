@@ -12,8 +12,10 @@
 - [x] get input from user: last week's winning numbers (6 digits)
   - [x] no duplicates
   - [x] in the range of [1, 45]
-- [ ] get input from user: bonus number (1 digit)
-  - [ ] different from the winning numbers
+- [x] get input from user: bonus number (1 digit)
+  - [x] different from the winning numbers
+  - [x] in the range of [1, 45]
+- [ ] find and display matches
 - [ ] calculate winning statistics
 - [ ] display winning statistics
 

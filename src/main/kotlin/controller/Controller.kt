@@ -1,6 +1,7 @@
 package controller
 
 import model.Lotto
+import model.Rank
 import view.InputView
 import view.OutputView
 
@@ -14,5 +15,25 @@ class Controller {
         outputView.displayTickets(lotto)
         val winningNumbers = inputView.getWinningNumbers()
         println(winningNumbers)
+        val bonusNumber = inputView.getBonusNumber(winningNumbers)
+        println("bonus: $bonusNumber")
+        val matchResult = calculateMatchResults(lotto, winningNumbers, bonusNumber)
+        outputView.displayMatchResults(matchResult)
     }
+
+    fun calculateMatchResults(lotto: Lotto, winningNumbers: List<Int>, bonusNumber: Int): List<Int> {
+        val matches = MutableList(6) { 0 }
+        for (ticket in lotto.tickets) {
+            when (Rank.valueOfEachTicket(ticket, winningNumbers, bonusNumber)) {
+                Rank.FIRST -> matches[0] += 1
+                Rank.SECOND -> matches[1] += 1
+                Rank.THIRD -> matches[2] += 1
+                Rank.FOURTH -> matches[3] += 1
+                Rank.FIFTH -> matches[4] += 1
+                Rank.MISS -> matches[5] += 1
+            }
+        }
+        return matches
+    }
+
 }

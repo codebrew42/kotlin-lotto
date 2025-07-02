@@ -71,9 +71,27 @@ class InputView {
         }
     }
 
+    fun validateBonusNumber(bonusNumber: Int, winningNumbers: List<Int>) {
+        require ( bonusNumber in 1..45) { "[ERROR] Number must be between 1 and 45. " }
+        require (!winningNumbers.contains(bonusNumber)) { "[ERROR] Bonus number can't be contained in winning numbers. " }
+    }
+
+    fun getBonusNumber(winningNumbers: List<Int>): Int {
+        while (true) {
+            val input = readLineOrRetry(GET_BONUS_NUMBERS)
+            try {
+                val bonusNumber = input.toInt()
+                validateBonusNumber(bonusNumber, winningNumbers)
+                return bonusNumber
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
+    }
     companion object {
         const val GET_PURCHASE_AMOUNT = "Please enter the purchase amount."
         const val GET_WINNING_NUMBERS = "Please enter last week’s winning numbers."
+        const val GET_BONUS_NUMBERS = "Please enter last week’s bonus number."
 
     }
 }

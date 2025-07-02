@@ -42,6 +42,6 @@ class OutputView {
     }
 
     fun displayWinningStatistic(winningStatistic: Float) {
-        println("Total return rate is $winningStatistic (A rate below 1 means a loss)\n")
+        println("Total return rate is ${"%.2f".format(winningStatistic)} (A rate below 1 means a loss)\n")
     }
 }

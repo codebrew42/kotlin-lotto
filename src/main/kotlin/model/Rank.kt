@@ -9,10 +9,9 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     MISS(0, 0);
 
     companion object {
-        public fun valueOfEachTicket(ticket: List<Int>, winningNumber: List<Int>, bonusNumber: Int): Rank {
+        fun valueOfEachTicket(ticket: List<Int>, winningNumber: List<Int>, bonusNumber: Int): Rank {
             val matchCount = ticket.count { it in winningNumber }
             val bonusMatch = bonusNumber in ticket
-
             return when {
                 matchCount == 6 -> FIRST
                 matchCount == 5 && bonusMatch -> SECOND

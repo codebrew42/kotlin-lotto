@@ -2,18 +2,21 @@ package model
 import view.ErrorMessages
 
 class Lotto(val purchaseAmount: Int) {
-    val numberOfTickets: Int
+    val numberOfTotalTickets: Int
+    var numberOfManualTickets: Int = 0
+    var numberOfAutomaticTickets: Int = 0
     val tickets = mutableListOf<Ticket>()
 
     init {
         require(purchaseAmount != 0 && purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) {
             ErrorMessages.PURCHASE_AMOUNT_INVALID_UNIT.message
         }
-        numberOfTickets = purchaseAmount / PURCHASE_AMOUNT_UNIT
+        numberOfTotalTickets = purchaseAmount / PURCHASE_AMOUNT_UNIT
     }
 
-    fun generateTickets() {
-        for (i in 0 until numberOfTickets) {
+    fun generateAutomaticTickets() {
+        numberOfAutomaticTickets = numberOfTotalTickets - numberOfManualTickets
+        for (i in 0 until numberOfAutomaticTickets) {
             tickets.add(createTicket())
         }
     }

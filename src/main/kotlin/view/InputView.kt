@@ -45,6 +45,10 @@ class InputView {
         return getUserInputAsInt(PromptMessages.GET_PURCHASE_AMOUNT.message)
     }
 
+    fun getNumberOfManualTickets(): Int {
+        return getUserInputAsInt(PromptMessages.GET_NUMBER_OF_MANUAL_TICKETS.message)
+    }
+
     private fun convertWinningNumbers(input: String): List<Int> {
         return try {
             input.split(",")
@@ -55,12 +59,12 @@ class InputView {
         }
     }
 
-    fun getWinningTicket(numberOfAttempts: Int = 3): Ticket {
+    private fun getTicket(prompt: String, numberOfAttempts: Int = 3): Ticket {
         if (numberOfAttempts <= 0) {
             throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
         }
         return try {
-            val input = getUserInputAsString(PromptMessages.GET_WINNING_NUMBERS.message)
+            val input = getUserInputAsString(prompt)
             val numbers = convertWinningNumbers(input)
             require(numbers.all { it in 1..45 }) { ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message }
             require(numbers.toSet().size == numbers.size) { ErrorMessages.NUMBER_DUPLICATE.message }
@@ -71,6 +75,15 @@ class InputView {
             getWinningTicket(numberOfAttempts - 1)
         }
     }
+
+    fun getWinningTicket(numberOfAttempts: Int = 3): Ticket {
+        return getTicket(PromptMessages.GET_WINNING_NUMBERS.message, numberOfAttempts)
+    }
+
+    fun getManualTicket(numberOfAttempts: Int = 3): Ticket {
+        return getTicket(PromptMessages.GET_MANUAL_TICKETS_NUMBERS.message, numberOfAttempts)
+    }
+
 
     fun getBonusNumber(
         winningTicket: Ticket,

@@ -32,6 +32,7 @@ class Controller {
         inputView: InputView,
         outputView: OutputView,
     ): Pair<List<Int>, Int> {
+        //
         val winningNumbers = inputView.getWinningNumbers()
         outputView.displayWinningNumbers(winningNumbers)
         val bonusNumber = inputView.getBonusNumber(winningNumbers)

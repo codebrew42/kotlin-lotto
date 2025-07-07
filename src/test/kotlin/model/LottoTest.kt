@@ -7,21 +7,21 @@ import org.junit.jupiter.api.assertThrows
 
 class LottoTest {
     @Test
-    fun `exception : invalid purchase amount - not divisible by unit`() {
+    fun `should throw exception - invalid purchase amount not divisible by unit`() {
         assertThrows<IllegalArgumentException> {
             Lotto(10)
         }
     }
 
     @Test
-    fun `invalid purchase amount negative`() {
+    fun `should throw exception - invalid purchase amount negative`() {
         assertThrows<IllegalArgumentException> {
             Lotto(-10)
         }
     }
 
     @Test
-    fun `valid purchase amount which is unit`() {
+    fun `should not throw exception - valid purchase amount equal to unit`() {
         assertDoesNotThrow {
             val lotto = Lotto(1000)
             assertEquals(1, lotto.numberOfTickets)
@@ -29,7 +29,7 @@ class LottoTest {
     }
 
     @Test
-    fun `valid purchase amount above unit`() {
+    fun `should not throw exception - valid purchase amount above unit`() {
         assertDoesNotThrow {
             val lotto = Lotto(15000)
             assertEquals(15, lotto.numberOfTickets)
@@ -37,7 +37,7 @@ class LottoTest {
     }
 
     @Test
-    fun `generateTickets should create the correct number of tickets`() {
+    fun `generateTickets - should create correct number of tickets`() {
         val lotto = Lotto(5000)
         assertDoesNotThrow {
             lotto.generateTickets()

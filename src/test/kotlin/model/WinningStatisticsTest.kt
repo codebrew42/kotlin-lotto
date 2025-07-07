@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test
 
 class WinningStatisticsTest {
     @Test
-    fun `test winning amount`() {
-        val results = listOf<Int>(1, 1, 1, 1, 1)
+    fun `should calculate correct winning amount`() {
+        val results = listOf(1, 1, 1, 1, 1)
         assertEquals(2031555000, Statistics.calculateWinningAmount(results))
     }
 
     @Test
-    fun `winning statistic calculation`() {
-        val matchResult = listOf<Int>(0, 0, 0, 0, 1)
+    fun `should calculate correct winning statistic`() {
+        val matchResult = listOf(0, 0, 0, 0, 1)
         assertEquals(1.0f, Statistics.calculateWinningStatistic(5000, matchResult))
     }
 }

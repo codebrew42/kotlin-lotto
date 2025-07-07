@@ -2,7 +2,6 @@ package view
 
 import model.Lotto
 import model.Ticket
-import model.WinningCombination
 
 class InputView {
     fun getUserInputAsString(
@@ -53,13 +52,7 @@ class InputView {
         }
     }
 
-    fun getWinningCombination(): WinningCombination {
-        val winningTicket = getWinningTicketWithRetry()
-        val bonusNumber = getBonusNumberWithRetry(winningTicket)
-        return WinningCombination(winningTicket, bonusNumber)
-    }
-
-    private fun getWinningTicketWithRetry(numberOfAttempts: Int = 3): Ticket {
+    fun getWinningTicket(numberOfAttempts: Int = 3): Ticket {
         if (numberOfAttempts <= 0) {
             throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
         }
@@ -72,11 +65,11 @@ class InputView {
             Ticket(numbers)
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getWinningTicketWithRetry(numberOfAttempts - 1)
+            getWinningTicket(numberOfAttempts - 1)
         }
     }
 
-    private fun getBonusNumberWithRetry(
+    fun getBonusNumber(
         winningTicket: Ticket,
         numberOfAttempts: Int = 3,
     ): Int {
@@ -92,7 +85,7 @@ class InputView {
             bonusNumber
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getBonusNumberWithRetry(winningTicket, numberOfAttempts - 1)
+            getBonusNumber(winningTicket, numberOfAttempts - 1)
         }
     }
 }

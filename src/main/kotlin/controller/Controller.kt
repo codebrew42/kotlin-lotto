@@ -33,10 +33,11 @@ class Controller {
         inputView: InputView,
         outputView: OutputView,
     ): WinningCombination {
-        val winningCombination = inputView.getWinningCombination()
-        outputView.displayWinningNumbers(winningCombination.winningNumbers.numbers)
-        outputView.displayBonusNumber(winningCombination.bonusNumber)
-        return winningCombination
+        val winningTicket = inputView.getWinningTicket()
+        outputView.displayWinningNumbers(winningTicket.numbers)
+        val bonusNumber = inputView.getBonusNumber(winningTicket)
+        outputView.displayBonusNumber(bonusNumber)
+        return WinningCombination(winningTicket, bonusNumber)
     }
 
     private fun handleResultDisplay(

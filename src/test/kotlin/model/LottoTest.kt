@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertThrows
 
 class LottoTest {
     @Test
-    fun `invalid purchase amount not divisible by unit`() {
+    fun `exception : invalid purchase amount - not divisible by unit`() {
         assertThrows<IllegalArgumentException> {
             Lotto(10)
         }

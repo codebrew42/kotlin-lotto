@@ -20,10 +20,11 @@ class OutputView {
 
     fun displayWinningNumbers(winningNumbers: List<Int>) {
         for (winningNumber in winningNumbers) {
-            if (winningNumbers.last() != winningNumber)
+            if (winningNumbers.last() != winningNumber) {
                 print("$winningNumber, ")
-            else
+            } else {
                 println("$winningNumber")
+            }
         }
     }
 

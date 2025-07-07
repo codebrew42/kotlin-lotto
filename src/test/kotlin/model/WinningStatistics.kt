@@ -14,6 +14,5 @@ class WinningStatistics {
     fun `winning statistic calculation`() {
         val matchResult = listOf<Int>(0, 0, 0, 0, 1)
         assertEquals(1.0f, Statistics.calculateWinningStatistic(5000, matchResult))
-
     }
 }

@@ -6,10 +6,15 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     THIRD(5, 1_500_000),
     FOURTH(4, 50_000),
     FIFTH(3, 5_000),
-    MISS(0, 0);
+    MISS(0, 0),
+    ;
 
     companion object {
-        fun valueOfEachTicket(ticket: List<Int>, winningNumber: List<Int>, bonusNumber: Int): Rank {
+        fun valueOfEachTicket(
+            ticket: List<Int>,
+            winningNumber: List<Int>,
+            bonusNumber: Int,
+        ): Rank {
             val matchCount = ticket.count { it in winningNumber }
             val bonusMatch = bonusNumber in ticket
             return when {

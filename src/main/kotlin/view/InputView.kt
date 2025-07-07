@@ -71,7 +71,10 @@ class InputView {
         }
     }
 
-    fun validateBonusNumber(bonusNumber: Int, winningNumbers: List<Int>) {
+    fun validateBonusNumber(
+        bonusNumber: Int,
+        winningNumbers: List<Int>,
+    ) {
         require(bonusNumber in Lotto.TICKET_NUMBER_MINIMUM..Lotto.TICKET_NUMBER_MAXIMUM) { ERROR_BONUS_RANGE }
         require(!winningNumbers.contains(bonusNumber)) { ERROR_DUPLICATE }
     }

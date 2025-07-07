@@ -55,7 +55,7 @@ class InputView {
     fun validateWinningNumbers(winningNumbers: List<Int>) {
         require(isValidRange(winningNumbers)) { ErrorMessages.INVALID_BONUS_RANGE.message }
         require(hasNoDuplicates(winningNumbers)) { ErrorMessages.DUPLICATE_NUMBER.message }
-        require(hasProperSize(winningNumbers)) { ErrorMessages.INVALID_SIZE_OF_TICKET.message }
+        require(hasProperSize(winningNumbers)) { ErrorMessages.INVALID_TICKET_LENGTH.message }
     }
 
     fun getWinningNumbers(): List<Int> {

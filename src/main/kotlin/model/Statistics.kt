@@ -5,7 +5,8 @@ object Statistics {
         lotto: Lotto,
         winningCombination: WinningCombination,
     ): List<Int> {
-        val matches = MutableList(6) { 0 }
+        // IntArray for better performance instead of mutablelist()
+        val matches = IntArray(6)
         for (ticket in lotto.tickets) {
             when (Rank.valueOfEachTicket(ticket, winningCombination)) {
                 Rank.FIRST -> matches[0] += 1
@@ -16,7 +17,7 @@ object Statistics {
                 Rank.MISS -> matches[5] += 1
             }
         }
-        return matches
+        return matches.toList()
     }
 
     fun calculateWinningAmount(matchResult: List<Int>): Int {

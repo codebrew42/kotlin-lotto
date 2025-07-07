@@ -37,10 +37,10 @@ class LottoTest {
     }
 
     @Test
-    fun `generateTickets - should create correct number of tickets`() {
+    fun `generateAutomaticTickets - should create correct number of tickets`() {
         val lotto = Lotto(5000)
         assertDoesNotThrow {
-            lotto.generateTickets()
+            lotto.generateAutomaticTickets()
         }
         assertEquals(5, lotto.tickets.size)
     }

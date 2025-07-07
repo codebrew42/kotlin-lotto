@@ -7,8 +7,12 @@ class OutputView {
         println("${lotto.purchaseAmount}")
     }
 
+    fun displaySingleNumber(number: Int){
+        println(number)
+    }
+
     fun displayNumberOfLottoTickets(lotto: Lotto) {
-        println("You have purchased ${lotto.numberOfTickets} tickets.")
+        println("Purchased _ manual and ${lotto.numberOfTotalTickets} automatic tickets.")
     }
 
     fun displayTickets(lotto: Lotto) {

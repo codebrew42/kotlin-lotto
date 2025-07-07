@@ -2,6 +2,7 @@ package controller
 
 import model.Lotto
 import model.Statistics
+import model.WinningCombination
 import view.InputView
 import view.OutputView
 
@@ -11,8 +12,8 @@ class Controller {
         outputView: OutputView,
     ) {
         val lotto = handleLottoPurchase(inputView, outputView)
-        val (winningNumbers, bonusNumber) = handleWinningNumbers(inputView, outputView)
-        handleResultDisplay(lotto, winningNumbers, bonusNumber, outputView)
+        val winningCombination = handleWinningCombination(inputView, outputView)
+        handleResultDisplay(lotto, winningCombination, outputView)
     }
 
     private fun handleLottoPurchase(
@@ -28,25 +29,22 @@ class Controller {
         return lotto
     }
 
-    private fun handleWinningNumbers(
+    private fun handleWinningCombination(
         inputView: InputView,
         outputView: OutputView,
-    ): Pair<List<Int>, Int> {
-        //
-        val winningNumbers = inputView.getWinningNumbers()
-        outputView.displayWinningNumbers(winningNumbers)
-        val bonusNumber = inputView.getBonusNumber(winningNumbers)
-        outputView.displayBonusNumber(bonusNumber)
-        return Pair(winningNumbers, bonusNumber)
+    ): WinningCombination {
+        val winningCombination = inputView.getWinningCombination()
+        outputView.displayWinningNumbers(winningCombination.winningNumbers.numbers)
+        outputView.displayBonusNumber(winningCombination.bonusNumber)
+        return winningCombination
     }
 
     private fun handleResultDisplay(
         lotto: Lotto,
-        winningNumbers: List<Int>,
-        bonusNumber: Int,
+        winningCombination: WinningCombination,
         outputView: OutputView,
     ) {
-        val matchResult = Statistics.calculateMatchResults(lotto, winningNumbers, bonusNumber)
+        val matchResult = Statistics.calculateMatchResults(lotto, winningCombination)
         outputView.displayMatchResults(matchResult)
         val winningStatistic = Statistics.calculateWinningStatistic(lotto.purchaseAmount, matchResult)
         outputView.displayWinningStatistic(winningStatistic)

@@ -12,8 +12,8 @@ class OutputView {
     }
 
     fun displayTickets(lotto: Lotto) {
-        for (i in 0 until lotto.numberOfTickets) {
-            println(lotto.tickets[i])
+        for (ticket in lotto.tickets) {
+            println(ticket)
         }
         println()
     }

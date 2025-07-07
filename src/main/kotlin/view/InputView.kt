@@ -1,6 +1,8 @@
 package view
 
 import model.Lotto
+import model.Ticket
+import model.WinningCombination
 
 class InputView {
     fun getUserInputAsString(
@@ -25,7 +27,7 @@ class InputView {
         numberOfAttempts: Int = 3,
     ): Int {
         if (numberOfAttempts <= 0) {
-            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // throw err & automatically return
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // automatically return
         }
         println(prompt)
         val input = readLine()?.trim()?.toIntOrNull()
@@ -51,63 +53,46 @@ class InputView {
         }
     }
 
-    fun isValidRange(numbers: List<Int>): Boolean {
-        return numbers.all { it in 1..45 }
+    fun getWinningCombination(): WinningCombination {
+        val winningTicket = getWinningTicketWithRetry()
+        val bonusNumber = getBonusNumberWithRetry(winningTicket)
+        return WinningCombination(winningTicket, bonusNumber)
     }
 
-    fun hasNoDuplicates(numbers: List<Int>): Boolean {
-        return numbers.toSet().size == numbers.size
-    }
-
-    fun hasProperSize(numbers: List<Int>): Boolean {
-        return numbers.size == Lotto.TICKET_LENGTH
-    }
-
-    fun validateWinningNumbers(winningNumbers: List<Int>) {
-        require(isValidRange(winningNumbers)) { ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message }
-        require(hasNoDuplicates(winningNumbers)) { ErrorMessages.NUMBER_DUPLICATE.message }
-        require(hasProperSize(winningNumbers)) { ErrorMessages.INVALID_TICKET_LENGTH.message }
-    }
-
-    fun getWinningNumbers(numberOfAttempts: Int = 3): List<Int> {
+    private fun getWinningTicketWithRetry(numberOfAttempts: Int = 3): Ticket {
         if (numberOfAttempts <= 0) {
             throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
         }
-        val input = getUserInputAsString(PromptMessages.GET_WINNING_NUMBERS.message)
         return try {
-            val winningNumbers = convertWinningNumbers(input)
-            validateWinningNumbers(winningNumbers)
-            winningNumbers
+            val input = getUserInputAsString(PromptMessages.GET_WINNING_NUMBERS.message)
+            val numbers = convertWinningNumbers(input)
+            require(numbers.all { it in 1..45 }) { ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message }
+            require(numbers.toSet().size == numbers.size) { ErrorMessages.NUMBER_DUPLICATE.message }
+            require(numbers.size == Lotto.TICKET_LENGTH) { ErrorMessages.INVALID_TICKET_LENGTH.message }
+            Ticket(numbers)
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getWinningNumbers(numberOfAttempts - 1)
+            getWinningTicketWithRetry(numberOfAttempts - 1)
         }
     }
 
-    fun validateBonusNumber(
-        bonusNumber: Int,
-        winningNumbers: List<Int>,
-    ) {
-        require(bonusNumber in Lotto.TICKET_NUMBER_MINIMUM..Lotto.TICKET_NUMBER_MAXIMUM) {
-            ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
-        }
-        require(!winningNumbers.contains(bonusNumber)) { ErrorMessages.NUMBER_DUPLICATE.message }
-    }
-
-    fun getBonusNumber(
-        winningNumbers: List<Int>,
+    private fun getBonusNumberWithRetry(
+        winningTicket: Ticket,
         numberOfAttempts: Int = 3,
     ): Int {
-        if (numberOfAttempts == 0) {
+        if (numberOfAttempts <= 0) {
             throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
         }
         return try {
             val bonusNumber = getUserInputAsInt(PromptMessages.GET_BONUS_NUMBER.message)
-            validateBonusNumber(bonusNumber, winningNumbers)
+            require(bonusNumber in Lotto.TICKET_NUMBER_MINIMUM..Lotto.TICKET_NUMBER_MAXIMUM) {
+                ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
+            }
+            require(bonusNumber !in winningTicket.numbers) { ErrorMessages.NUMBER_DUPLICATE.message }
             bonusNumber
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getBonusNumber(winningNumbers, numberOfAttempts - 1)
+            getBonusNumberWithRetry(winningTicket, numberOfAttempts - 1)
         }
     }
 }

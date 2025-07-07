@@ -3,7 +3,7 @@ import view.ErrorMessages
 
 class Lotto(val purchaseAmount: Int) {
     val numberOfTickets: Int
-    val tickets = mutableListOf<MutableList<Int>>()
+    val tickets = mutableListOf<Ticket>()
 
     init {
         require(purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) { ErrorMessages.PURCHASE_AMOUNT_INVALID_UNIT }
@@ -11,21 +11,14 @@ class Lotto(val purchaseAmount: Int) {
     }
 
     fun generateTickets() {
-        while (tickets.size < numberOfTickets) {
-            tickets.add(fillTicket())
+        for (i in 0 until numberOfTickets) {
+            tickets.add(createTicket())
         }
     }
 
-    fun fillTicket(): MutableList<Int> {
-        val ticket = mutableListOf<Int>()
-        while (ticket.size < TICKET_LENGTH) {
-            val number = (TICKET_NUMBER_MINIMUM..TICKET_NUMBER_MAXIMUM).random()
-            if (number !in ticket) {
-                ticket.add(number)
-            }
-        }
-        ticket.sort()
-        return ticket
+    private fun createTicket(): Ticket {
+        val numbers = (TICKET_NUMBER_MINIMUM..TICKET_NUMBER_MAXIMUM).shuffled().take(TICKET_LENGTH).sorted()
+        return Ticket(numbers)
     }
 
     companion object {

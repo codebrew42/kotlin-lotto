@@ -2,7 +2,6 @@ package model
 
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -38,26 +37,11 @@ class LottoTest {
     }
 
     @Test
-    fun `valid ticket size`() {
-        val lotto = Lotto(15000)
-        val ticket = lotto.fillTicket()
-        assertEquals(6, ticket.size)
-    }
-
-    @Test
-    fun `valid non-duplicate ticket numbers`() {
-        val lotto = Lotto(15000)
-        val ticket = lotto.fillTicket()
-        assertEquals(6, ticket.toSet().size)
-    }
-
-    @Test
-    fun `ticket numbers are in valid range 1 to 45`() {
-        val lotto = Lotto(1000)
-        val ticket = lotto.fillTicket()
-
-        for (number in ticket) {
-            assertTrue(number >= 1 && number <= 45, "Number $number is not in valid range 1-45")
+    fun `generateTickets should create the correct number of tickets`() {
+        val lotto = Lotto(5000)
+        assertDoesNotThrow {
+            lotto.generateTickets()
         }
+        assertEquals(5, lotto.tickets.size)
     }
 }

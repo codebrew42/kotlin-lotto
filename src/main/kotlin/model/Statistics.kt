@@ -3,12 +3,11 @@ package model
 object Statistics {
     fun calculateMatchResults(
         lotto: Lotto,
-        winningNumbers: List<Int>,
-        bonusNumber: Int,
+        winningCombination: WinningCombination,
     ): List<Int> {
         val matches = MutableList(6) { 0 }
         for (ticket in lotto.tickets) {
-            when (Rank.valueOfEachTicket(ticket, winningNumbers, bonusNumber)) {
+            when (Rank.valueOfEachTicket(ticket, winningCombination)) {
                 Rank.FIRST -> matches[0] += 1
                 Rank.SECOND -> matches[1] += 1
                 Rank.THIRD -> matches[2] += 1

@@ -3,7 +3,7 @@ package model
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class WinningStatistics {
+class WinningStatisticsTest {
     @Test
     fun `test winning amount`() {
         val results = listOf<Int>(1, 1, 1, 1, 1)

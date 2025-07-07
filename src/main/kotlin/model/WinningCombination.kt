@@ -7,7 +7,7 @@ data class WinningCombination(
     val bonusNumber: Int,
 ) {
     init {
-        require(bonusNumber in Lotto.TICKET_NUMBER_MINIMUM..Lotto.TICKET_NUMBER_MAXIMUM) {
+        require(bonusNumber in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX) {
             ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
         }
         require(bonusNumber !in winningNumbers.numbers) { ErrorMessages.NUMBER_DUPLICATE.message }

@@ -20,13 +20,29 @@ class Controller {
         inputView: InputView,
         outputView: OutputView,
     ): Lotto {
-        val purchaseAmount = inputView.getPurchaseAmount()
-        val lotto = Lotto(purchaseAmount)
+        val lotto = createLottoWithRetries(inputView)
         outputView.displayPurchaseAmount(lotto)
         outputView.displayNumberOfLottoTickets(lotto)
         lotto.generateTickets()
         outputView.displayTickets(lotto)
         return lotto
+    }
+
+    private fun createLottoWithRetries(
+        inputView: InputView,
+        maxAttempts: Int = 3,
+    ): Lotto {
+        var lastException: IllegalArgumentException? = null
+        for (i in 1..maxAttempts) {
+            try {
+                val purchaseAmount = inputView.getPurchaseAmount()
+                return Lotto(purchaseAmount)
+            } catch (e: IllegalArgumentException) {
+                println("${e.message}")
+                lastException = e
+            }
+        }
+        throw lastException!!
     }
 
     private fun handleWinningCombination(

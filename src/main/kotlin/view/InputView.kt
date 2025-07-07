@@ -28,8 +28,11 @@ class InputView {
         if (numberOfAttempts <= 0) {
             throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // automatically return
         }
-        println(prompt)
-        val input = readLine()?.trim()?.toIntOrNull()
+        //ver1: new
+        val inputAsString = getUserInputAsString(prompt)
+        val input = inputAsString.toIntOrNull()
+        //ver2: original
+        //val input = readLine()?.trim()?.toIntOrNull()
         return if (input != null) {
             input
         } else {
@@ -78,7 +81,7 @@ class InputView {
         }
         return try {
             val bonusNumber = getUserInputAsInt(PromptMessages.GET_BONUS_NUMBER.message)
-            require(bonusNumber in Lotto.TICKET_NUMBER_MINIMUM..Lotto.TICKET_NUMBER_MAXIMUM) {
+            require(bonusNumber in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX) {
                 ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
             }
             require(bonusNumber !in winningTicket.numbers) { ErrorMessages.NUMBER_DUPLICATE.message }

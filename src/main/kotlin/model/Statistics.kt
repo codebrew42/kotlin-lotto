@@ -5,7 +5,6 @@ object Statistics {
         lotto: Lotto,
         winningCombination: WinningCombination,
     ): List<Int> {
-        // IntArray for better performance instead of mutablelist()
         val matches = IntArray(6)
         for (ticket in lotto.tickets) {
             when (Rank.valueOfEachTicket(ticket, winningCombination)) {

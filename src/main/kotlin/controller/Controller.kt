@@ -16,10 +16,8 @@ class Controller {
         fillNumbersToEachTickets(lotto, inputView, outputView)
         outputView.displayNumberOfLottoTickets(lotto)
         outputView.displayTickets(lotto)
-
-        //    lotto = fillAutomaticTickets()
-        // val winningCombination = handleWinningCombination(inputView, outputView)
-        // handleResultDisplay(lotto, winningCombination, outputView)
+        val winningCombination = handleWinningCombination(inputView, outputView)
+        handleResultDisplay(lotto, winningCombination, outputView)
     }
 
     private fun setNumbersOfEachTickets(
@@ -52,7 +50,6 @@ class Controller {
         outputView: OutputView,
     ) {
         generateManualTickets(lotto, inputView)
-        // Display only manual tickets (no brackets)
         if (lotto.numberOfManualTickets > 0) {
             for (i in 0 until lotto.numberOfManualTickets) {
                 outputView.displayTicketWithoutBrackets(lotto.tickets[i])
@@ -60,7 +57,6 @@ class Controller {
             println()
         }
         fillAutomaticTickets(lotto)
-        // Display all tickets (manual + automatic, no brackets)
     }
 
     private fun generateManualTickets(
@@ -83,58 +79,6 @@ class Controller {
         }
     }
 
-    /*
-
-
-
-    private fun handleLottoPurchase(
-        inputView: InputView,
-        outputView: OutputView,
-    ): Lotto {
-        val lotto: Lotto = getNumberOfAutomaticTickets(inputView)
-        outputView.displayPurchaseAmount(lotto)
-        saveManualTickets(lotto, inputView)
-        outputView.displayNumberOfLottoTickets(lotto)
-        lotto.generateAutomaticTickets()
-        outputView.displayTickets(lotto)
-        return lotto
-    }
-
-    private fun getNumberOfAutomaticTickets(
-        inputView: InputView,
-        maxAttempts: Int = 3,
-    ): Lotto {
-        var lastException: IllegalArgumentException? = null
-        for (i in 1..maxAttempts) {
-            try {
-                val purchaseAmount = inputView.getPurchaseAmount()
-                return Lotto(purchaseAmount)
-            } catch (e: IllegalArgumentException) {
-                println("${e.message}")
-                lastException = e
-            }
-        }
-        throw lastException!!
-    }
-
-    private fun saveManualTickets(
-        lotto: Lotto,
-        inputView: InputView
-    ) {
-        lotto.numberOfManualTickets = inputView.getNumberOfManualTickets()
-        fillManualTickets(lotto, inputView)
-    }
-
-    private fun fillManualTickets(
-        lotto: Lotto,
-        inputView: InputView
-    ) {
-        for (i in 0 until lotto.numberOfManualTickets) {
-            val manualTicket = inputView.getManualTicket()
-            lotto.tickets.add(i, manualTicket)
-        }
-    }
-*/
     private fun handleWinningCombination(
         inputView: InputView,
         outputView: OutputView,

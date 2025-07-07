@@ -28,11 +28,11 @@ class InputView {
         if (numberOfAttempts <= 0) {
             throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // automatically return
         }
-        //ver1: new
+        // ver1: new
         val inputAsString = getUserInputAsString(prompt)
         val input = inputAsString.toIntOrNull()
-        //ver2: original
-        //val input = readLine()?.trim()?.toIntOrNull()
+        // ver2: original
+        // val input = readLine()?.trim()?.toIntOrNull()
         return if (input != null) {
             input
         } else {

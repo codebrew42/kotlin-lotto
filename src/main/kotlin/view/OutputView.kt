@@ -12,7 +12,9 @@ class OutputView {
     }
 
     fun displayNumberOfLottoTickets(lotto: Lotto) {
-        println("Purchased _ manual and ${lotto.numberOfTotalTickets} automatic tickets.")
+        println(
+            "Purchased ${lotto.numberOfManualTickets} manual and ${lotto.numberOfTotalTickets} automatic tickets.",
+        )
     }
 
     fun displayTicketsWithoutBrackets(lotto: model.Lotto) {
@@ -27,6 +29,10 @@ class OutputView {
             println(ticket)
         }
         println()
+    }
+
+    fun displayTicketWithoutBrackets(ticket: model.Ticket) {
+        println(ticket.numbers.sorted().joinToString(", "))
     }
 
     fun displayWinningNumbers(winningNumbers: List<Int>) {

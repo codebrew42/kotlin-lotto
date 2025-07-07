@@ -21,6 +21,10 @@ class Lotto(val purchaseAmount: Int) {
         }
     }
 
+    fun createTicketForController(): Ticket {
+        return createTicket()
+    }
+
     private fun createTicket(): Ticket {
         val numbers = (TICKET_NUMBER_MIN..TICKET_NUMBER_MAX).shuffled().take(TICKET_LENGTH).sorted()
         return Ticket(numbers)

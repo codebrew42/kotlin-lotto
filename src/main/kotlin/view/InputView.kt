@@ -44,7 +44,8 @@ class InputView {
     private fun convertWinningNumbers(input: String): List<Int> {
         return try {
             input.split(",")
-                .map { it.trim().toInt() }
+                .map(String::trim)
+                .map(String::toInt)
         } catch (e: NumberFormatException) {
             throw IllegalArgumentException(ErrorMessages.INPUT_INVALID_DIGITS.message)
         }

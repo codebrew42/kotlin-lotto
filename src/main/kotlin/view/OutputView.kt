@@ -7,12 +7,19 @@ class OutputView {
         println("${lotto.purchaseAmount}")
     }
 
-    fun displaySingleNumber(number: Int){
+    fun displaySingleNumber(number: Int) {
         println(number)
     }
 
     fun displayNumberOfLottoTickets(lotto: Lotto) {
         println("Purchased _ manual and ${lotto.numberOfTotalTickets} automatic tickets.")
+    }
+
+    fun displayTicketsWithoutBrackets(lotto: model.Lotto) {
+        for (ticket in lotto.tickets) {
+            println(ticket.numbers.sorted().joinToString(", "))
+        }
+        println()
     }
 
     fun displayTickets(lotto: Lotto) {

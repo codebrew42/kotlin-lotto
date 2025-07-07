@@ -24,7 +24,7 @@ class LottoTest {
     fun `should not throw exception - valid purchase amount equal to unit`() {
         assertDoesNotThrow {
             val lotto = Lotto(1000)
-            assertEquals(1, lotto.numberOfTickets)
+            assertEquals(1, lotto.numberOfTotalTickets)
         }
     }
 
@@ -32,7 +32,7 @@ class LottoTest {
     fun `should not throw exception - valid purchase amount above unit`() {
         assertDoesNotThrow {
             val lotto = Lotto(15000)
-            assertEquals(15, lotto.numberOfTickets)
+            assertEquals(15, lotto.numberOfTotalTickets)
         }
     }
 

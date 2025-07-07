@@ -13,14 +13,17 @@ class Controller {
         outputView: OutputView,
     ) {
         val lotto = setNumberOfEachTicket(inputView, outputView)
-    //    lotto = generateManualTickets()
-    //    lotto = generateAutomaticTickets()
-        outputView.displayTickets(lotto)
-        //val winningCombination = handleWinningCombination(inputView, outputView)
-        //handleResultDisplay(lotto, winningCombination, outputView)
+        //    lotto = generateManualTickets()
+        //    lotto = generateAutomaticTickets()
+        outputView.displayTicketsWithoutBrackets(lotto)
+        // val winningCombination = handleWinningCombination(inputView, outputView)
+        // handleResultDisplay(lotto, winningCombination, outputView)
     }
 
-    private fun setNumberOfEachTicket(inputView: InputView, outputView: OutputView): Lotto {
+    private fun setNumberOfEachTicket(
+        inputView: InputView,
+        outputView: OutputView,
+    ): Lotto {
         val maxAttempts = 3
         var lastException: IllegalArgumentException? = null
         for (i in 1..maxAttempts) {
@@ -32,6 +35,7 @@ class Controller {
                 lotto.numberOfManualTickets = manualCount
                 outputView.displaySingleNumber(lotto.numberOfManualTickets)
                 lotto.numberOfAutomaticTickets = lotto.numberOfTotalTickets - manualCount
+                generateManualTickets(lotto, inputView)
                 return lotto
             } catch (e: IllegalArgumentException) {
                 println(e.message ?: "Unknown error")
@@ -41,7 +45,18 @@ class Controller {
         throw lastException ?: IllegalArgumentException("Unknown error")
     }
 
-
+    private fun generateManualTickets(
+        lotto: Lotto,
+        inputView: InputView,
+    ) {
+        if (lotto.numberOfManualTickets > 0) {
+            println(view.PromptMessages.GET_MANUAL_TICKETS_NUMBERS.message)
+            repeat(lotto.numberOfManualTickets) {
+                val numbers = inputView.getUserInputAsListOfInt("", 3)
+                lotto.tickets.add(model.Ticket(numbers))
+            }
+        }
+    }
 
     /*
 
@@ -91,7 +106,7 @@ class Controller {
         }
         throw lastException!!
     }
-    
+
     private fun saveManualTickets(
         lotto: Lotto,
         inputView: InputView

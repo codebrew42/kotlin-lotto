@@ -1,11 +1,12 @@
 package model
+import view.ErrorMessages
 
 class Lotto(val purchaseAmount: Int) {
     val numberOfTickets: Int
     val tickets = mutableListOf<MutableList<Int>>()
 
     init {
-        require(purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) { ERROR_INVALID_UNIT }
+        require(purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) { ErrorMessages.ERROR_INVALID_UNIT }
         numberOfTickets = purchaseAmount / PURCHASE_AMOUNT_UNIT
     }
 
@@ -32,6 +33,5 @@ class Lotto(val purchaseAmount: Int) {
         const val TICKET_LENGTH = 6
         const val TICKET_NUMBER_MINIMUM = 1
         const val TICKET_NUMBER_MAXIMUM = 45
-        const val ERROR_INVALID_UNIT = "[ERROR] purchase amount must be divisible by 1000"
     }
 }

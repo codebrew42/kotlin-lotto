@@ -11,7 +11,9 @@ class InputView {
         if (numberOfAttempts <= 0) {
             throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // check
         }
-        println(prompt)
+        if (prompt.isNotBlank()) {
+            println(prompt)
+        }
         val input = readLine()?.trim()
         return if (!input.isNullOrBlank()) { // need Blank? i have .trim()
             input
@@ -41,6 +43,27 @@ class InputView {
         }
     }
 
+    fun getUserInputAsListOfInt(
+        prompt: String,
+        numberOfAttempts: Int = 3,
+        delimiter: String = ",",
+    ): List<Int> {
+        if (numberOfAttempts <= 0) {
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
+        }
+        val inputAsString = getUserInputAsString(prompt)
+        val inputList =
+            inputAsString.split(delimiter)
+                .map { it.trim() }
+                .mapNotNull { it.toIntOrNull() }
+        return if (inputList.isNotEmpty() && inputList.all { it.toString() in inputAsString.split(delimiter).map { s -> s.trim() } }) {
+            inputList
+        } else {
+            println(ErrorMessages.INPUT_INVALID_DIGITS.message)
+            return getUserInputAsListOfInt(prompt, numberOfAttempts - 1, delimiter)
+        }
+    }
+
     fun getPurchaseAmount(): Int {
         return getUserInputAsInt(PromptMessages.GET_PURCHASE_AMOUNT.message)
     }
@@ -59,7 +82,10 @@ class InputView {
         }
     }
 
-    private fun getTicket(prompt: String, numberOfAttempts: Int = 3): Ticket {
+    private fun getTicket(
+        prompt: String,
+        numberOfAttempts: Int = 3,
+    ): Ticket {
         if (numberOfAttempts <= 0) {
             throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
         }
@@ -83,7 +109,6 @@ class InputView {
     fun getManualTicket(numberOfAttempts: Int = 3): Ticket {
         return getTicket(PromptMessages.GET_MANUAL_TICKETS_NUMBERS.message, numberOfAttempts)
     }
-
 
     fun getBonusNumber(
         winningTicket: Ticket,

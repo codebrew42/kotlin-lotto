@@ -3,32 +3,42 @@ package view
 import model.Lotto
 
 class InputView {
-    private fun readLineOrRetry(prompt: String): String {
-        while (true) {
-            print(prompt)
-            val input = readLine()
-            if (input != null) {
-                return input
-            } else {
-                println(ErrorMessages.RETRY_INPUT.message)
-            }
+    fun getUserInputAsString(
+        prompt: String,
+        numberOfAttempts: Int = 3,
+    ): String {
+        if (numberOfAttempts <= 0) {
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // check
+        }
+        println(prompt)
+        val input = readLine()?.trim()
+        return if (!input.isNullOrBlank()) { // need Blank? i have .trim()
+            input
+        } else {
+            println(ErrorMessages.INPUT_EMPTY.message)
+            return getUserInputAsString(prompt, numberOfAttempts - 1)
         }
     }
 
-    private fun parsePurchaseAmount(input: String): Int? {
-        return input.toIntOrNull()
+    fun getUserInputAsInt(
+        prompt: String,
+        numberOfAttempts: Int = 3,
+    ): Int {
+        if (numberOfAttempts <= 0) {
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // throw err & automatically return
+        }
+        println(prompt)
+        val input = readLine()?.trim()?.toIntOrNull()
+        return if (input != null) {
+            input
+        } else {
+            println(ErrorMessages.INPUT_INVALID_DIGITS.message)
+            return getUserInputAsInt(prompt, numberOfAttempts - 1)
+        }
     }
 
     fun getPurchaseAmount(): Int {
-        while (true) {
-            val input = readLineOrRetry(PromptMessages.GET_PURCHASE_AMOUNT.message)
-            val amount = parsePurchaseAmount(input)
-            if (amount != null) {
-                return amount
-            } else {
-                println(ErrorMessages.INVALID_INPUT.message)
-            }
-        }
+        return getUserInputAsInt(PromptMessages.GET_PURCHASE_AMOUNT.message)
     }
 
     private fun convertWinningNumbers(input: String): List<Int> {
@@ -36,7 +46,7 @@ class InputView {
             input.split(",")
                 .map { it.trim().toInt() }
         } catch (e: NumberFormatException) {
-            throw IllegalArgumentException(ErrorMessages.INVALID_DIGITS.message)
+            throw IllegalArgumentException(ErrorMessages.INPUT_INVALID_DIGITS.message)
         }
     }
 
@@ -53,21 +63,23 @@ class InputView {
     }
 
     fun validateWinningNumbers(winningNumbers: List<Int>) {
-        require(isValidRange(winningNumbers)) { ErrorMessages.INVALID_BONUS_RANGE.message }
-        require(hasNoDuplicates(winningNumbers)) { ErrorMessages.DUPLICATE_NUMBER.message }
+        require(isValidRange(winningNumbers)) { ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message }
+        require(hasNoDuplicates(winningNumbers)) { ErrorMessages.NUMBER_DUPLICATE.message }
         require(hasProperSize(winningNumbers)) { ErrorMessages.INVALID_TICKET_LENGTH.message }
     }
 
-    fun getWinningNumbers(): List<Int> {
-        while (true) {
-            val input = readLineOrRetry(PromptMessages.GET_WINNING_NUMBERS.message)
-            try {
-                val winningNumbers = convertWinningNumbers(input)
-                validateWinningNumbers(winningNumbers)
-                return winningNumbers
-            } catch (e: IllegalArgumentException) {
-                println(e.message)
-            }
+    fun getWinningNumbers(numberOfAttempts: Int = 3): List<Int> {
+        if (numberOfAttempts <= 0) {
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
+        }
+        val input = getUserInputAsString(PromptMessages.GET_WINNING_NUMBERS.message)
+        return try {
+            val winningNumbers = convertWinningNumbers(input)
+            validateWinningNumbers(winningNumbers)
+            winningNumbers
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            getWinningNumbers(numberOfAttempts - 1)
         }
     }
 
@@ -75,20 +87,26 @@ class InputView {
         bonusNumber: Int,
         winningNumbers: List<Int>,
     ) {
-        require(bonusNumber in Lotto.TICKET_NUMBER_MINIMUM..Lotto.TICKET_NUMBER_MAXIMUM) { ErrorMessages.INVALID_BONUS_RANGE.message }
-        require(!winningNumbers.contains(bonusNumber)) { ErrorMessages.DUPLICATE_NUMBER.message }
+        require(bonusNumber in Lotto.TICKET_NUMBER_MINIMUM..Lotto.TICKET_NUMBER_MAXIMUM) {
+            ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
+        }
+        require(!winningNumbers.contains(bonusNumber)) { ErrorMessages.NUMBER_DUPLICATE.message }
     }
 
-    fun getBonusNumber(winningNumbers: List<Int>): Int {
-        while (true) {
-            val input = readLineOrRetry(PromptMessages.GET_BONUS_NUMBER.message)
-            try {
-                val bonusNumber = input.toInt()
-                validateBonusNumber(bonusNumber, winningNumbers)
-                return bonusNumber
-            } catch (e: IllegalArgumentException) {
-                println(e.message)
-            }
+    fun getBonusNumber(
+        winningNumbers: List<Int>,
+        numberOfAttempts: Int = 3,
+    ): Int {
+        if (numberOfAttempts == 0) {
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
+        }
+        return try {
+            val bonusNumber = getUserInputAsInt(PromptMessages.GET_BONUS_NUMBER.message)
+            validateBonusNumber(bonusNumber, winningNumbers)
+            bonusNumber
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            getBonusNumber(winningNumbers, numberOfAttempts - 1)
         }
     }
 }

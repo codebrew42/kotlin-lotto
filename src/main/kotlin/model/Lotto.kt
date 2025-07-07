@@ -6,7 +6,7 @@ class Lotto(val purchaseAmount: Int) {
     val tickets = mutableListOf<MutableList<Int>>()
 
     init {
-        require(purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) { ErrorMessages.ERROR_INVALID_UNIT }
+        require(purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) { ErrorMessages.PURCHASE_AMOUNT_INVALID_UNIT }
         numberOfTickets = purchaseAmount / PURCHASE_AMOUNT_UNIT
     }
 

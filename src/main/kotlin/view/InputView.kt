@@ -14,7 +14,7 @@ class InputView {
         if (prompt.isNotBlank()) {
             println(prompt)
         }
-        val input = readLine()?.trim()
+        val input = readlnOrNull()?.trim()
         return if (!input.isNullOrBlank()) { // need Blank? i have .trim()
             input
         } else {

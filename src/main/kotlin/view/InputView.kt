@@ -4,7 +4,7 @@ import model.Lotto
 import model.Ticket
 
 class InputView {
-    fun getUserInputAsString(
+    private fun getUserInputAsString(
         prompt: String,
         numberOfAttempts: Int = 3,
     ): String {
@@ -23,7 +23,7 @@ class InputView {
         }
     }
 
-    fun getUserInputAsInt(
+    private fun getUserInputAsInt(
         prompt: String,
         numberOfAttempts: Int = 3,
     ): Int {

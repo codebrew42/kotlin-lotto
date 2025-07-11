@@ -106,10 +106,6 @@ class InputView {
         return getTicket(PromptMessages.GET_WINNING_NUMBERS.message, numberOfAttempts)
     }
 
-    fun getManualTicket(numberOfAttempts: Int = 3): Ticket {
-        return getTicket(PromptMessages.GET_MANUAL_TICKETS_NUMBERS.message, numberOfAttempts)
-    }
-
     fun getBonusNumber(
         winningTicket: Ticket,
         numberOfAttempts: Int = 3,

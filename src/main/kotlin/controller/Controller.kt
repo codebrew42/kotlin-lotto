@@ -14,8 +14,7 @@ class Controller {
     ) {
         val lotto = setNumbersOfEachTickets(inputView, outputView)
         fillNumbersToEachTickets(lotto, inputView, outputView)
-        outputView.displayNumberOfLottoTickets(lotto)
-        outputView.displayTickets(lotto)
+        outputView.displayLottoTicketsInfo(lotto)
         val winningCombination = handleWinningCombination(inputView, outputView)
         handleResultDisplay(lotto, winningCombination, outputView)
     }

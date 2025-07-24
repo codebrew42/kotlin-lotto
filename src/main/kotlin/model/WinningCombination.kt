@@ -10,6 +10,6 @@ data class WinningCombination(
         require(bonusNumber in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX) {
             ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
         }
-        require(bonusNumber !in winningNumbers.numbers) { ErrorMessages.NUMBER_DUPLICATE.message }
+        require(bonusNumber !in winningNumbers.getIntNumbers()) { ErrorMessages.NUMBER_DUPLICATE.message }
     }
 }

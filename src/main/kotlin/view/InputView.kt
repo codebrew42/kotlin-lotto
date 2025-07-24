@@ -68,7 +68,7 @@ class InputView {
         repeat(3) {
             try {
                 val numbers = getUserInputAsListOfInt("", 3)
-                require(numbers.size == Lotto.TICKET_LENGTH) { 
+                require(numbers.size == Lotto.TICKET_LENGTH) {
                     ErrorMessages.INVALID_TICKET_LENGTH.message
                 }
                 require(numbers.all { it in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX }) {
@@ -106,7 +106,7 @@ class InputView {
                 require(numbers.all { it in 1..45 }) { ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message }
                 require(numbers.toSet().size == numbers.size) { ErrorMessages.NUMBER_DUPLICATE.message }
                 require(numbers.size == Lotto.TICKET_LENGTH) { ErrorMessages.INVALID_TICKET_LENGTH.message }
-                return Ticket(numbers)
+                return Ticket.fromInts(numbers)
             } catch (e: IllegalArgumentException) {
                 println(e.message)
             }
@@ -128,7 +128,7 @@ class InputView {
                 require(bonusNumber in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX) {
                     ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
                 }
-                require(bonusNumber !in winningTicket.numbers) { ErrorMessages.NUMBER_DUPLICATE.message }
+                require(bonusNumber !in winningTicket.getIntNumbers()) { ErrorMessages.NUMBER_DUPLICATE.message }
                 return bonusNumber
             } catch (e: IllegalArgumentException) {
                 println(e.message)

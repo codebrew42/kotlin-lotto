@@ -23,6 +23,15 @@ class Controller {
         inputView: InputView,
         outputView: OutputView,
     ): Lotto {
+        val lotto = createLotto(inputView, outputView)
+        setManualTicketCount(lotto, inputView, outputView)
+        return lotto
+    }
+
+    private fun createLotto(
+        inputView: InputView,
+        outputView: OutputView,
+    ): Lotto {
         val maxAttempts = 3
         var lastException: IllegalArgumentException? = null
         for (i in 1..maxAttempts) {
@@ -30,11 +39,29 @@ class Controller {
                 val purchaseAmount = inputView.getPurchaseAmount()
                 val lotto = Lotto(purchaseAmount)
                 outputView.displayPurchaseAmount(lotto)
+                return lotto
+            } catch (e: IllegalArgumentException) {
+                outputView.displayError(e.message ?: "Unknown error")
+                lastException = e
+            }
+        }
+        throw lastException ?: IllegalArgumentException("Unknown error")
+    }
+
+    private fun setManualTicketCount(
+        lotto: Lotto,
+        inputView: InputView,
+        outputView: OutputView,
+    ) {
+        val maxAttempts = 3
+        var lastException: IllegalArgumentException? = null
+        for (i in 1..maxAttempts) {
+            try {
                 val manualCount = inputView.getNumberOfManualTickets()
                 lotto.numberOfManualTickets = manualCount
                 outputView.displaySingleNumber(lotto.numberOfManualTickets)
                 lotto.numberOfAutomaticTickets = lotto.numberOfTotalTickets - manualCount
-                return lotto
+                return
             } catch (e: IllegalArgumentException) {
                 outputView.displayError(e.message ?: "Unknown error")
                 lastException = e

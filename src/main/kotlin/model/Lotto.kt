@@ -17,7 +17,7 @@ class Lotto(val purchaseAmount: Int, val numberOfManualTickets: Int) {
     }
 
     fun generateAutomaticTickets() {
-        for (i in 0 until numberOfAutomaticTickets) {
+        repeat(numberOfAutomaticTickets) {
             tickets.add(createTicket())
         }
     }

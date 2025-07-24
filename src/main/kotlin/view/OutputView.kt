@@ -11,13 +11,10 @@ class OutputView {
         println(number)
     }
 
-    fun displayNumberOfLottoTickets(lotto: Lotto) {
+    fun displayLottoTicketsInfo(lotto: Lotto) {
         println(
             "Purchased ${lotto.numberOfManualTickets} manual and ${lotto.numberOfTotalTickets} automatic tickets.",
         )
-    }
-
-    fun displayTickets(lotto: Lotto) {
         for (ticket in lotto.tickets) {
             println(ticket)
         }

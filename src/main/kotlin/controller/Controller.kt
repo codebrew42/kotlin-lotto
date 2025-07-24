@@ -36,7 +36,7 @@ class Controller {
                 lotto.numberOfAutomaticTickets = lotto.numberOfTotalTickets - manualCount
                 return lotto
             } catch (e: IllegalArgumentException) {
-                println(e.message ?: "Unknown error")
+                outputView.displayError(e.message ?: "Unknown error")
                 lastException = e
             }
         }
@@ -48,22 +48,18 @@ class Controller {
         inputView: InputView,
         outputView: OutputView,
     ) {
-        generateManualTickets(lotto, inputView)
-        if (lotto.numberOfManualTickets > 0) {
-            for (i in 0 until lotto.numberOfManualTickets) {
-                outputView.displayTicketWithoutBrackets(lotto.tickets[i])
-            }
-            println()
-        }
+        generateManualTickets(lotto, inputView, outputView)
+        outputView.displayManualTickets(lotto)
         fillAutomaticTickets(lotto)
     }
 
     private fun generateManualTickets(
         lotto: Lotto,
         inputView: InputView,
+        outputView: OutputView,
     ) {
         if (lotto.numberOfManualTickets > 0) {
-            println(view.PromptMessages.GET_MANUAL_TICKETS_NUMBERS.message)
+            outputView.displayManualTicketsPrompt()
             repeat(lotto.numberOfManualTickets) {
                 val numbers = inputView.getUserInputAsListOfInt("", 3)
                 lotto.tickets.add(Ticket(numbers))

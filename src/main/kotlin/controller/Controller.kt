@@ -82,7 +82,7 @@ class Controller {
             outputView.displayManualTicketsPrompt()
             repeat(lotto.numberOfManualTickets) {
                 val numbers = inputView.getManualTicketNumbers()
-                lotto.tickets.add(Ticket(numbers))
+                lotto.tickets.add(Ticket.fromInts(numbers))
             }
         }
     }
@@ -99,7 +99,7 @@ class Controller {
         outputView: OutputView,
     ): WinningCombination {
         val winningTicket = inputView.getWinningTicket()
-        outputView.displayWinningNumbers(winningTicket.numbers)
+        outputView.displayWinningNumbers(winningTicket.getIntNumbers())
         val bonusNumber = inputView.getBonusNumber(winningTicket)
         outputView.displayBonusNumber(bonusNumber)
         return WinningCombination(winningTicket, bonusNumber)

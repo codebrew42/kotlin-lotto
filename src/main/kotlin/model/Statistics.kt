@@ -29,6 +29,7 @@ object Statistics {
         purchaseAmount: Int,
         matchResult: List<Int>,
     ): Float {
+        require(purchaseAmount > 0) { "Purchase amount must be greater than zero" }
         val winningAmount = calculateWinningAmount(matchResult)
         return (winningAmount.toFloat() / purchaseAmount.toFloat())
     }

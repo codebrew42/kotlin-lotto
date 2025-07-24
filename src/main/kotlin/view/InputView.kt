@@ -64,6 +64,27 @@ class InputView {
         return getUserInputAsInt(PromptMessages.GET_NUMBER_OF_MANUAL_TICKETS.message)
     }
 
+    fun getManualTicketNumbers(): List<Int> {
+        repeat(3) {
+            try {
+                val numbers = getUserInputAsListOfInt("", 3)
+                require(numbers.size == Lotto.TICKET_LENGTH) { 
+                    ErrorMessages.INVALID_TICKET_LENGTH.message
+                }
+                require(numbers.all { it in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX }) {
+                    ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
+                }
+                require(numbers.toSet().size == numbers.size) {
+                    ErrorMessages.NUMBER_DUPLICATE.message
+                }
+                return numbers.sorted()
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
+        throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
+    }
+
     private fun convertWinningNumbers(input: String): List<Int> {
         return try {
             input.split(",")

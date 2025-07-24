@@ -81,7 +81,7 @@ class Controller {
         if (lotto.numberOfManualTickets > 0) {
             outputView.displayManualTicketsPrompt()
             repeat(lotto.numberOfManualTickets) {
-                val numbers = inputView.getUserInputAsListOfInt("", 3)
+                val numbers = inputView.getManualTicketNumbers()
                 lotto.tickets.add(Ticket(numbers))
             }
         }

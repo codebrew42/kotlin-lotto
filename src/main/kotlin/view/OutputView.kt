@@ -17,13 +17,6 @@ class OutputView {
         )
     }
 
-    fun displayTicketsWithoutBrackets(lotto: model.Lotto) {
-        for (ticket in lotto.tickets) {
-            println(ticket.numbers.sorted().joinToString(", "))
-        }
-        println()
-    }
-
     fun displayTickets(lotto: Lotto) {
         for (ticket in lotto.tickets) {
             println(ticket)

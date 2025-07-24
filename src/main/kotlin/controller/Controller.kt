@@ -4,6 +4,7 @@ import model.Lotto
 import model.Statistics
 import model.Ticket
 import model.WinningCombination
+import view.ErrorMessages
 import view.InputView
 import view.OutputView
 
@@ -33,8 +34,7 @@ class Controller {
         outputView: OutputView,
     ): Lotto {
         val maxAttempts = 3
-        var lastException: IllegalArgumentException? = null
-        for (i in 1..maxAttempts) {
+        repeat(maxAttempts) {
             try {
                 val purchaseAmount = inputView.getPurchaseAmount()
                 val lotto = Lotto(purchaseAmount)
@@ -42,10 +42,9 @@ class Controller {
                 return lotto
             } catch (e: IllegalArgumentException) {
                 outputView.displayError(e.message ?: "Unknown error")
-                lastException = e
             }
         }
-        throw lastException ?: IllegalArgumentException("Unknown error")
+        throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
     }
 
     private fun setManualTicketCount(
@@ -54,8 +53,7 @@ class Controller {
         outputView: OutputView,
     ) {
         val maxAttempts = 3
-        var lastException: IllegalArgumentException? = null
-        for (i in 1..maxAttempts) {
+        repeat(maxAttempts) {
             try {
                 val manualCount = inputView.getNumberOfManualTickets()
                 lotto.numberOfManualTickets = manualCount
@@ -64,10 +62,9 @@ class Controller {
                 return
             } catch (e: IllegalArgumentException) {
                 outputView.displayError(e.message ?: "Unknown error")
-                lastException = e
             }
         }
-        throw lastException ?: IllegalArgumentException("Unknown error")
+        throw IllegalArgumentException("Too many failed attempts. Please restart the program.")
     }
 
     private fun fillNumbersToEachTickets(

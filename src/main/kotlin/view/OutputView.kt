@@ -71,6 +71,6 @@ class OutputView {
     }
 
     fun displayManualTicketsPrompt() {
-        println(view.PromptMessages.GET_MANUAL_TICKETS_NUMBERS.message)
+        println(PromptMessages.GET_MANUAL_TICKETS_NUMBERS.message)
     }
 }

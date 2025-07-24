@@ -26,7 +26,26 @@ The features were implemented in the following order:
 - [x] calculate winning statistics
 - [x] display winning statistics
 
+## Things to consider next time
+- when the user exceeds maximum attempts, terminate right away
+```aiignore
+Enter the number of manual tickets to purchase.
+hhh
+[ERROR] Please enter valid numbers.
+
+Enter the number of manual tickets to purchase.
+hhh
+[ERROR] Please enter valid numbers.
+
+Enter the number of manual tickets to purchase.
+hh
+[ERROR] Please enter valid numbers.
+[ERROR] You reached maximum number of attempts.
+
+Enter the number of manual tickets to purchase.
+```
+
 ## learnings
 - use [model-view-controller pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
 - apply test driven development as (1) writing tests, (2) write code that passes tests, (3) refactor code,
-and repeat (1) to (3) until program fulfills all requirements
+and repeat (1) to (3) until the program fulfills all requirements

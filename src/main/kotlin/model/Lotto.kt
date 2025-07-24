@@ -1,15 +1,9 @@
 package model
 import view.ErrorMessages
 
-class Lotto(val purchaseAmount: Int) {
+class Lotto(val purchaseAmount: Int, val numberOfManualTickets: Int) {
     val numberOfTotalTickets: Int
-    var numberOfManualTickets: Int = 0
-        set(value) {
-            require(value >= 0) { MANUAL_TICKET_INVALID_NOT_POSITIVE }
-            require(value <= numberOfTotalTickets) { MANUAL_TICKET_INVALID_TOO_LARGE }
-            field = value
-        }
-    var numberOfAutomaticTickets: Int = 0
+    val numberOfAutomaticTickets: Int
     val tickets = mutableListOf<Ticket>()
 
     init {
@@ -17,10 +11,14 @@ class Lotto(val purchaseAmount: Int) {
             ErrorMessages.PURCHASE_AMOUNT_INVALID_UNIT.message
         }
         numberOfTotalTickets = purchaseAmount / PURCHASE_AMOUNT_UNIT
+        
+        require(numberOfManualTickets >= 0) { MANUAL_TICKET_INVALID_NOT_POSITIVE }
+        require(numberOfManualTickets <= numberOfTotalTickets) { MANUAL_TICKET_INVALID_TOO_LARGE }
+        
+        numberOfAutomaticTickets = numberOfTotalTickets - numberOfManualTickets
     }
 
     fun generateAutomaticTickets() {
-        numberOfAutomaticTickets = numberOfTotalTickets - numberOfManualTickets
         for (i in 0 until numberOfAutomaticTickets) {
             tickets.add(createTicket())
         }

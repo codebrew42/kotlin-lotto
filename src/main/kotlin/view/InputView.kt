@@ -9,16 +9,16 @@ class InputView {
         numberOfAttempts: Int = 3,
     ): String {
         repeat(numberOfAttempts) {
-            if (prompt.isNotBlank()) {
-                println(prompt)
-            }
+            printPromptIfNotBlank(prompt)
             val input = readlnOrNull()?.trim()
-            if (!input.isNullOrBlank()) {
-                return input
-            }
+            if (!input.isNullOrBlank()) return input
             println(ErrorMessages.INPUT_EMPTY.message)
         }
         throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
+    }
+
+    private fun printPromptIfNotBlank(prompt: String) {
+        if (prompt.isNotBlank()) println(prompt)
     }
 
     private fun getUserInputAsInt(
@@ -28,9 +28,7 @@ class InputView {
         repeat(numberOfAttempts) {
             val inputAsString = getUserInputAsString(prompt)
             val input = inputAsString.toIntOrNull()
-            if (input != null) {
-                return input
-            }
+            if (input != null) return input
             println(ErrorMessages.INPUT_INVALID_DIGITS.message)
         }
         throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
@@ -66,23 +64,33 @@ class InputView {
 
     fun getManualTicketNumbers(): List<Int> {
         repeat(3) {
-            try {
-                val numbers = getUserInputAsListOfInt("", 3)
-                require(numbers.size == Lotto.TICKET_LENGTH) {
-                    ErrorMessages.INVALID_TICKET_LENGTH.message
-                }
-                require(numbers.all { it in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX }) {
-                    ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
-                }
-                require(numbers.toSet().size == numbers.size) {
-                    ErrorMessages.NUMBER_DUPLICATE.message
-                }
-                return numbers.sorted()
-            } catch (e: IllegalArgumentException) {
-                println(e.message)
-            }
+            val validatedNumbers = tryGetValidManualTicket()
+            if (validatedNumbers != null) return validatedNumbers
         }
         throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
+    }
+
+    private fun tryGetValidManualTicket(): List<Int>? {
+        return try {
+            val numbers = getUserInputAsListOfInt("", 3)
+            validateManualTicketNumbers(numbers)
+            numbers.sorted()
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            null
+        }
+    }
+
+    private fun validateManualTicketNumbers(numbers: List<Int>) {
+        require(numbers.size == Lotto.TICKET_LENGTH) {
+            ErrorMessages.INVALID_TICKET_LENGTH.message
+        }
+        require(numbers.all { it in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX }) {
+            ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
+        }
+        require(numbers.toSet().size == numbers.size) {
+            ErrorMessages.NUMBER_DUPLICATE.message
+        }
     }
 
     private fun convertWinningNumbers(input: String): List<Int> {
@@ -100,18 +108,28 @@ class InputView {
         numberOfAttempts: Int = 3,
     ): Ticket {
         repeat(numberOfAttempts) {
-            try {
-                val input = getUserInputAsString(prompt)
-                val numbers = convertWinningNumbers(input)
-                require(numbers.all { it in 1..45 }) { ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message }
-                require(numbers.toSet().size == numbers.size) { ErrorMessages.NUMBER_DUPLICATE.message }
-                require(numbers.size == Lotto.TICKET_LENGTH) { ErrorMessages.INVALID_TICKET_LENGTH.message }
-                return Ticket.fromInts(numbers)
-            } catch (e: IllegalArgumentException) {
-                println(e.message)
-            }
+            val validTicket = tryCreateValidTicket(prompt)
+            if (validTicket != null) return validTicket
         }
         throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
+    }
+
+    private fun tryCreateValidTicket(prompt: String): Ticket? {
+        return try {
+            val input = getUserInputAsString(prompt)
+            val numbers = convertWinningNumbers(input)
+            validateTicketNumbers(numbers)
+            Ticket.fromInts(numbers)
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            null
+        }
+    }
+
+    private fun validateTicketNumbers(numbers: List<Int>) {
+        require(numbers.all { it in 1..45 }) { ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message }
+        require(numbers.toSet().size == numbers.size) { ErrorMessages.NUMBER_DUPLICATE.message }
+        require(numbers.size == Lotto.TICKET_LENGTH) { ErrorMessages.INVALID_TICKET_LENGTH.message }
     }
 
     fun getWinningTicket(numberOfAttempts: Int = 3): Ticket {
@@ -123,17 +141,32 @@ class InputView {
         numberOfAttempts: Int = 3,
     ): Int {
         repeat(numberOfAttempts) {
-            try {
-                val bonusNumber = getUserInputAsInt(PromptMessages.GET_BONUS_NUMBER.message)
-                require(bonusNumber in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX) {
-                    ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
-                }
-                require(bonusNumber !in winningTicket.getIntNumbers()) { ErrorMessages.NUMBER_DUPLICATE.message }
-                return bonusNumber
-            } catch (e: IllegalArgumentException) {
-                println(e.message)
-            }
+            val validBonusNumber = tryGetValidBonusNumber(winningTicket)
+            if (validBonusNumber != null) return validBonusNumber
         }
         throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
+    }
+
+    private fun tryGetValidBonusNumber(winningTicket: Ticket): Int? {
+        return try {
+            val bonusNumber = getUserInputAsInt(PromptMessages.GET_BONUS_NUMBER.message)
+            validateBonusNumber(bonusNumber, winningTicket)
+            bonusNumber
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            null
+        }
+    }
+
+    private fun validateBonusNumber(
+        bonusNumber: Int,
+        winningTicket: Ticket,
+    ) {
+        require(bonusNumber in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX) {
+            ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
+        }
+        require(bonusNumber !in winningTicket.getIntNumbers()) {
+            ErrorMessages.NUMBER_DUPLICATE.message
+        }
     }
 }

@@ -9,7 +9,7 @@ class InputView {
         numberOfAttempts: Int = 3,
     ): String {
         if (numberOfAttempts <= 0) {
-            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) //TODO: check
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // TODO: check
         }
         if (prompt.isNotBlank()) {
             println(prompt)
@@ -45,20 +45,19 @@ class InputView {
         numberOfAttempts: Int = 3,
         delimiter: String = ",",
     ): List<Int> {
-        if (numberOfAttempts <= 0) {
-            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
-        }
-        val inputAsString = getUserInputAsString(prompt)
-        val inputList =
-            inputAsString.split(delimiter)
-                .map { it.trim() }
-                .mapNotNull { it.toIntOrNull() }
-        return if (inputList.isNotEmpty() && inputList.all { it.toString() in inputAsString.split(delimiter).map { s -> s.trim() } }) {
-            inputList
-        } else {
+        repeat(numberOfAttempts) {
+            val inputAsString = getUserInputAsString(prompt)
+            val result =
+                inputAsString.split(delimiter)
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() }
+                    .mapNotNull { it.toIntOrNull() }
+            if (result.isNotEmpty()) {
+                return result
+            }
             println(ErrorMessages.INPUT_INVALID_DIGITS.message)
-            return getUserInputAsListOfInt(prompt, numberOfAttempts - 1, delimiter)
         }
+        throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
     }
 
     fun getPurchaseAmount(): Int {

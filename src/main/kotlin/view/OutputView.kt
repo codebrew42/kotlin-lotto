@@ -25,6 +25,15 @@ class OutputView {
         println(ticket.numbers.sorted().joinToString(", "))
     }
 
+    fun displayManualTickets(lotto: Lotto) {
+        if (lotto.numberOfManualTickets > 0) {
+            for (i in 0 until lotto.numberOfManualTickets) {
+                displayTicketWithoutBrackets(lotto.tickets[i])
+            }
+            println()
+        }
+    }
+
     fun displayWinningNumbers(winningNumbers: List<Int>) {
         for (winningNumber in winningNumbers) {
             if (winningNumbers.last() != winningNumber) {
@@ -55,5 +64,13 @@ class OutputView {
 
     fun displayWinningStatistic(winningStatistic: Float) {
         println("Total return rate is ${"%.2f".format(winningStatistic)} (A rate below 1 means a loss)\n")
+    }
+
+    fun displayError(message: String) {
+        println(message)
+    }
+
+    fun displayManualTicketsPrompt() {
+        println(view.PromptMessages.GET_MANUAL_TICKETS_NUMBERS.message)
     }
 }

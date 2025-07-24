@@ -13,22 +13,28 @@ class OutputView {
 
     fun displayLottoTicketsInfo(lotto: Lotto) {
         println(
-            "Purchased ${lotto.numberOfManualTickets} manual and ${lotto.numberOfTotalTickets} automatic tickets.",
+            "Purchased ${lotto.numberOfManualTickets} manual and ${lotto.numberOfAutomaticTickets} automatic tickets.",
         )
-        for (ticket in lotto.tickets) {
+        val manualTickets = lotto.tickets.getManualTickets(lotto.numberOfManualTickets)
+        for (ticket in manualTickets) {
+            println(ticket)
+        }
+        val automaticTickets = lotto.tickets.getAutomaticTickets(lotto.numberOfManualTickets)
+        for (ticket in automaticTickets) {
             println(ticket)
         }
         println()
     }
 
     fun displayTicketWithoutBrackets(ticket: model.Ticket) {
-        println(ticket.numbers.sorted().joinToString(", "))
+        println(ticket.getIntNumbers().sorted().joinToString(", "))
     }
 
     fun displayManualTickets(lotto: Lotto) {
         if (lotto.numberOfManualTickets > 0) {
-            for (i in 0 until lotto.numberOfManualTickets) {
-                displayTicketWithoutBrackets(lotto.tickets[i])
+            val manualTickets = lotto.tickets.getManualTickets(lotto.numberOfManualTickets)
+            for (ticket in manualTickets) {
+                displayTicketWithoutBrackets(ticket)
             }
             println()
         }

@@ -26,11 +26,7 @@ class Controller {
     ): Lotto {
         val purchaseAmount = getPurchaseAmountWithRetry(inputView, outputView)
         val manualCount = getManualTicketCountWithRetry(inputView, outputView)
-        
-        val lotto = Lotto(purchaseAmount, manualCount)
-        outputView.displayPurchaseAmount(lotto)
-        outputView.displaySingleNumber(lotto.numberOfManualTickets)
-        return lotto
+        return Lotto(purchaseAmount, manualCount)
     }
 
     private fun getPurchaseAmountWithRetry(
@@ -40,7 +36,9 @@ class Controller {
         val maxAttempts = 3
         repeat(maxAttempts) {
             try {
-                return inputView.getPurchaseAmount()
+                val amount = inputView.getPurchaseAmount()
+                outputView.displayPurchaseAmount(Lotto(amount, 0))
+                return amount
             } catch (e: IllegalArgumentException) {
                 outputView.displayError(e.message ?: "Unknown error")
             }
@@ -55,7 +53,9 @@ class Controller {
         val maxAttempts = 3
         repeat(maxAttempts) {
             try {
-                return inputView.getNumberOfManualTickets()
+                val count = inputView.getNumberOfManualTickets()
+                outputView.displaySingleNumber(count)
+                return count
             } catch (e: IllegalArgumentException) {
                 outputView.displayError(e.message ?: "Unknown error")
             }

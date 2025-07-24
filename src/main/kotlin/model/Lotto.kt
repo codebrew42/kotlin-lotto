@@ -4,7 +4,7 @@ import view.ErrorMessages
 class Lotto(val purchaseAmount: Int, val numberOfManualTickets: Int) {
     val numberOfTotalTickets: Int
     val numberOfAutomaticTickets: Int
-    val tickets = mutableListOf<Ticket>()
+    val tickets = Tickets()
 
     init {
         require(purchaseAmount != 0 && purchaseAmount % PURCHASE_AMOUNT_UNIT == 0) {
@@ -24,7 +24,7 @@ class Lotto(val purchaseAmount: Int, val numberOfManualTickets: Int) {
 
     fun createTicket(): Ticket {
         val numbers = (TICKET_NUMBER_MIN..TICKET_NUMBER_MAX).shuffled().take(TICKET_LENGTH).sorted()
-        return Ticket(numbers)
+        return Ticket.fromInts(numbers)
     }
 
     companion object {

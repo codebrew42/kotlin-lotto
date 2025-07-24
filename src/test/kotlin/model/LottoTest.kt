@@ -42,17 +42,17 @@ class LottoTest {
         assertDoesNotThrow {
             lotto.generateAutomaticTickets()
         }
-        assertEquals(5, lotto.tickets.size)
+        assertEquals(5, lotto.tickets.size())
     }
 
     @Test
     fun `number should be properly saved - check manual creation of lotto tickets`() {
         val lotto = Lotto(2000, 2)
-        val ticket1 = Ticket(listOf(1, 2, 3, 4, 5, 6))
-        val ticket2 = Ticket(listOf(7, 8, 9, 10, 11, 12))
+        val ticket1 = Ticket.fromInts(listOf(1, 2, 3, 4, 5, 6))
+        val ticket2 = Ticket.fromInts(listOf(7, 8, 9, 10, 11, 12))
         lotto.tickets.add(ticket1)
         lotto.tickets.add(ticket2)
-        assertEquals(2, lotto.tickets.size)
+        assertEquals(2, lotto.tickets.size())
         assertEquals(ticket1, lotto.tickets[0])
         assertEquals(ticket2, lotto.tickets[1])
     }
@@ -60,37 +60,37 @@ class LottoTest {
     @Test
     fun `manually added tickets are used for game logic`() {
         val lotto = Lotto(1000, 1)
-        val myTicket = Ticket(listOf(1, 2, 3, 10, 20, 30))
+        val myTicket = Ticket.fromInts(listOf(1, 2, 3, 10, 20, 30))
         lotto.tickets.add(myTicket)
-        assertEquals(1, lotto.tickets.size)
-        assertEquals(myTicket, lotto.tickets.first())
+        assertEquals(1, lotto.tickets.size())
+        assertEquals(myTicket, lotto.tickets[0])
     }
 
     @Test
     fun `should throw exception - a ticket with incorrect length`() {
         assertThrows<IllegalArgumentException> {
-            Ticket(listOf(1, 2, 3, 4, 5))
+            Ticket.fromInts(listOf(1, 2, 3, 4, 5))
         }
     }
 
     @Test
     fun `should throw exception - a ticket with duplicates`() {
         assertThrows<IllegalArgumentException> {
-            Ticket(listOf(1, 1, 2, 3, 4, 5))
+            Ticket.fromInts(listOf(1, 1, 2, 3, 4, 5))
         }
     }
 
     @Test
     fun `should throw exception - a ticket with an out-of-range number violating maximum limit`() {
         assertThrows<IllegalArgumentException> {
-            Ticket(listOf(1, 2, 3, 4, 5, 46))
+            Ticket.fromInts(listOf(1, 2, 3, 4, 5, 46))
         }
     }
 
     @Test
     fun `should throw exception - a ticket with an out-of-range number violating minimum limit`() {
         assertThrows<IllegalArgumentException> {
-            Ticket(listOf(1, 2, 3, 4, 5, -1))
+            Ticket.fromInts(listOf(1, 2, 3, 4, 5, -1))
         }
     }
 }

@@ -2,16 +2,21 @@ package model
 
 import view.ErrorMessages
 
-data class Ticket(val numbers: List<Int>) {
-    init {
-        require(numbers.size == Lotto.TICKET_LENGTH) { ErrorMessages.INVALID_TICKET_LENGTH.message }
-        require(numbers.toSet().size == Lotto.TICKET_LENGTH) { ErrorMessages.NUMBER_DUPLICATE.message }
-        require(numbers.all { it in Lotto.TICKET_NUMBER_MIN..Lotto.TICKET_NUMBER_MAX }) {
-            ErrorMessages.BONUS_NUMBER_OUT_OF_RANGE.message
+data class Ticket(val numbers: List<LottoNumber>) {
+    companion object {
+        fun fromInts(intNumbers: List<Int>): Ticket {
+            return Ticket(intNumbers.map { LottoNumber.from(it) })
         }
     }
 
+    init {
+        require(numbers.size == Lotto.TICKET_LENGTH) { ErrorMessages.INVALID_TICKET_LENGTH.message }
+        require(numbers.toSet().size == Lotto.TICKET_LENGTH) { ErrorMessages.NUMBER_DUPLICATE.message }
+    }
+
+    fun getIntNumbers(): List<Int> = numbers.map { it.getValue() }
+
     override fun toString(): String {
-        return numbers.sorted().joinToString(prefix = "[", postfix = "]", separator = ", ")
+        return numbers.sortedBy { it.getValue() }.joinToString(prefix = "[", postfix = "]", separator = ", ")
     }
 }

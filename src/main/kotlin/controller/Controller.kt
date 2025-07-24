@@ -24,22 +24,23 @@ class Controller {
         inputView: InputView,
         outputView: OutputView,
     ): Lotto {
-        val lotto = createLotto(inputView, outputView)
-        setManualTicketCount(lotto, inputView, outputView)
+        val purchaseAmount = getPurchaseAmountWithRetry(inputView, outputView)
+        val manualCount = getManualTicketCountWithRetry(inputView, outputView)
+        
+        val lotto = Lotto(purchaseAmount, manualCount)
+        outputView.displayPurchaseAmount(lotto)
+        outputView.displaySingleNumber(lotto.numberOfManualTickets)
         return lotto
     }
 
-    private fun createLotto(
+    private fun getPurchaseAmountWithRetry(
         inputView: InputView,
         outputView: OutputView,
-    ): Lotto {
+    ): Int {
         val maxAttempts = 3
         repeat(maxAttempts) {
             try {
-                val purchaseAmount = inputView.getPurchaseAmount()
-                val lotto = Lotto(purchaseAmount)
-                outputView.displayPurchaseAmount(lotto)
-                return lotto
+                return inputView.getPurchaseAmount()
             } catch (e: IllegalArgumentException) {
                 outputView.displayError(e.message ?: "Unknown error")
             }
@@ -47,19 +48,14 @@ class Controller {
         throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
     }
 
-    private fun setManualTicketCount(
-        lotto: Lotto,
+    private fun getManualTicketCountWithRetry(
         inputView: InputView,
         outputView: OutputView,
-    ) {
+    ): Int {
         val maxAttempts = 3
         repeat(maxAttempts) {
             try {
-                val manualCount = inputView.getNumberOfManualTickets()
-                lotto.numberOfManualTickets = manualCount
-                outputView.displaySingleNumber(lotto.numberOfManualTickets)
-                lotto.numberOfAutomaticTickets = lotto.numberOfTotalTickets - manualCount
-                return
+                return inputView.getNumberOfManualTickets()
             } catch (e: IllegalArgumentException) {
                 outputView.displayError(e.message ?: "Unknown error")
             }

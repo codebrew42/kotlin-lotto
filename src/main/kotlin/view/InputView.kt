@@ -94,7 +94,7 @@ class InputView {
             Ticket(numbers)
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getWinningTicket(numberOfAttempts - 1)
+            getTicket(prompt, numberOfAttempts - 1)
         }
     }
 

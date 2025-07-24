@@ -88,8 +88,7 @@ class Controller {
     }
 
     private fun fillAutomaticTickets(lotto: Lotto) {
-        val autoCount = lotto.numberOfAutomaticTickets
-        for (i in 0 until autoCount) {
+        repeat(lotto.numberOfAutomaticTickets) {
             lotto.tickets.add(lotto.createTicket())
         }
     }

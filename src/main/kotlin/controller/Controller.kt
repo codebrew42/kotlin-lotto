@@ -94,7 +94,7 @@ class Controller {
     private fun fillAutomaticTickets(lotto: Lotto) {
         val autoCount = lotto.numberOfAutomaticTickets
         for (i in 0 until autoCount) {
-            lotto.tickets.add(lotto.createTicketForController())
+            lotto.tickets.add(lotto.createTicket())
         }
     }
 

@@ -9,8 +9,6 @@ class Tickets {
 
     fun size(): Int = tickets.size
 
-    fun getAll(): List<Ticket> = tickets.toList()
-
     fun getManualTickets(count: Int): List<Ticket> {
         require(count <= tickets.size) { "Not enough tickets for manual count" }
         return tickets.take(count)

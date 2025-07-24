@@ -9,13 +9,13 @@ class InputView {
         numberOfAttempts: Int = 3,
     ): String {
         if (numberOfAttempts <= 0) {
-            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // check
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) //TODO: check
         }
         if (prompt.isNotBlank()) {
             println(prompt)
         }
         val input = readlnOrNull()?.trim()
-        return if (!input.isNullOrBlank()) { // need Blank? i have .trim()
+        return if (!input.isNullOrBlank()) {
             input
         } else {
             println(ErrorMessages.INPUT_EMPTY.message)
@@ -28,13 +28,10 @@ class InputView {
         numberOfAttempts: Int = 3,
     ): Int {
         if (numberOfAttempts <= 0) {
-            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message) // automatically return
+            throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
         }
-        // ver1: new
         val inputAsString = getUserInputAsString(prompt)
         val input = inputAsString.toIntOrNull()
-        // ver2: original
-        // val input = readLine()?.trim()?.toIntOrNull()
         return if (input != null) {
             input
         } else {

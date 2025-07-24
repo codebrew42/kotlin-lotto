@@ -9,22 +9,16 @@ class WinningCombinationTest {
         @JvmStatic
         fun invalidLists() =
             listOf(
-                // Duplicate numbers
                 listOf(1, 2, 3, 4, 5, 5),
-                // Invalid size
                 listOf(1, 2, 3, 4),
-                // Number out of range
                 listOf(0, 1, 2, 3, 4, 5),
             )
 
         @JvmStatic
         fun invalidBonusNumbers() =
             listOf(
-                // Duplicate with winning numbers
                 6,
-                // Number out of range (violates the lower bound)
                 -1,
-                // Number out of range (violates the upper bound)
                 46,
             )
     }

@@ -11,10 +11,8 @@ class Lotto(val purchaseAmount: Int, val numberOfManualTickets: Int) {
             ErrorMessages.PURCHASE_AMOUNT_INVALID_UNIT.message
         }
         numberOfTotalTickets = purchaseAmount / PURCHASE_AMOUNT_UNIT
-        
         require(numberOfManualTickets >= 0) { MANUAL_TICKET_INVALID_NOT_POSITIVE }
         require(numberOfManualTickets <= numberOfTotalTickets) { MANUAL_TICKET_INVALID_TOO_LARGE }
-        
         numberOfAutomaticTickets = numberOfTotalTickets - numberOfManualTickets
     }
 

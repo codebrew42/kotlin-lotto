@@ -15,7 +15,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             winningCombination: WinningCombination,
         ): Rank {
             val matchCount = ticket.numbers.count { it in winningCombination.winningNumbers.numbers }
-            val bonusMatch = winningCombination.bonusNumber in ticket.numbers
+            val bonusMatch = winningCombination.bonusNumber in ticket.getIntNumbers()
             return when {
                 matchCount == 6 -> FIRST
                 matchCount == 5 && bonusMatch -> SECOND

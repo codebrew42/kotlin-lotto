@@ -27,14 +27,14 @@ class WinningCombinationTest {
     @MethodSource("invalidLists")
     fun `should throw exception - create Ticket with invalid numbers`(numbers: List<Int>) {
         assertThrows<IllegalArgumentException> {
-            Ticket(numbers)
+            Ticket.fromInts(numbers)
         }
     }
 
     @ParameterizedTest
     @MethodSource("invalidBonusNumbers")
     fun `should throw exception - create WinningCombination with invalid bonus number`(bonusNumber: Int) {
-        val winningTicket = Ticket(listOf(1, 2, 3, 4, 5, 6))
+        val winningTicket = Ticket.fromInts(listOf(1, 2, 3, 4, 5, 6))
         assertThrows<IllegalArgumentException> {
             WinningCombination(winningTicket, bonusNumber)
         }

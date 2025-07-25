@@ -2,6 +2,7 @@ package view
 import model.Lotto
 
 enum class ErrorMessages(val message: String) {
+    PROGRAM_RUNNING_ERROR("[ERROR] An error occurred. The program will terminate."),
     INPUT_EMPTY("[ERROR] The input is empty!"),
     INPUT_TOO_MANY_ATTEMPT("[ERROR] You reached maximum number of attempts."),
     INPUT_INVALID_DIGITS("[ERROR] Please enter valid numbers."),

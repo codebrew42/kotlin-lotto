@@ -34,7 +34,7 @@ class InputView {
         throw IllegalArgumentException(ErrorMessages.INPUT_TOO_MANY_ATTEMPT.message)
     }
 
-    fun getUserInputAsListOfInt(
+    private fun getUserInputAsListOfInt(
         prompt: String,
         numberOfAttempts: Int = 3,
         delimiter: String = ",",
